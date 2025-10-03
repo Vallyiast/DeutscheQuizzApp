@@ -1,0 +1,58 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@drawable/background_gradient"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/main_menu"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:translationY="-80dp"
+        android:text="Menu"
+        android:textColor="#ffffff"
+        android:backgroundTint="#3d3729"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:color="#3d3729"
+        android:padding="20dp"
+        android:textStyle="bold"
+        android:text="Menu "
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/QCM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:backgroundTint="#3d3729"
+        android:text="QCM Mode" />
+
+    <Button
+        android:id="@+id/Write"
+        android:layout_width="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3d3729"
+        android:text="Ecriture Mode" />
+
+    <Button
+        android:id="@+id/List"
+        android:layout_width="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3d3729"
+        android:text="Liste" />
+
+
+</LinearLayout>

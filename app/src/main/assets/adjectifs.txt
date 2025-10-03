@@ -1,0 +1,33 @@
+ganz;entier
+neu;nouveau
+anders;autre
+gross;grand,gros
+erste;premier
+viel;nombreux
+gut;bon
+weit;grand
+klein;petit
+lang;long
+alt;agé
+hoch;haut,élevé
+letzte;dernier
+eigen;propre
+schon;beau,bon
+spat;tardif
+wichtig;important
+weitere;supplémentaire
+genau;exact,précis
+allein;seul
+arm;pauvre
+einfach;simple, facile
+freundlich;amical
+gleich;similaire
+glucklich;heureux
+krank;malade
+langweilig;ennuyeux
+lustig;drole
+ruhig;calme
+schnell;rapide
+traurig;triste
+schwer;difficile, lourd
+wunderbar;magnifique

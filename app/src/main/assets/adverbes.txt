@@ -1,0 +1,17 @@
+heute;aujourd'hui
+hier;ici
+oft;souvent
+nie;jamais
+morgen;demain
+gestern;hier
+immer;toujours
+manchmal;parfois
+zusammen;ensemble
+langsam;lentement
+vielleicht;probablement
+unten;en-dessous
+oben;au-dessus
+drinnen;dedans
+draussen;dehors
+da;ici
+dort;ici
