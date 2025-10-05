@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    public static String[] types = {"verbes","noms","adverbes","adjectifs","cours_gluck"};
 
     public static final int couleurBR = Color.rgb(131,105,83);
     public static final int couleurB = Color.rgb(61, 55, 41);

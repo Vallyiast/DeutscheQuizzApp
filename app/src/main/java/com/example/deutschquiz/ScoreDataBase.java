@@ -3,45 +3,55 @@ package com.example.deutschquiz;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
-
-import androidx.annotation.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
+import android.util.Log;
 
 public class ScoreDataBase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "scores.db";
-    private static final int DATABASE_VERSION = 1;
-    private final String type;
+    private static final int DATABASE_VERSION = 2;
+    private final String actual_type;
     private final String TABLE_NAME;
 
 
     private final SQLiteDatabase dbase;
 
-    public ScoreDataBase(Context context, String type) {
+    public ScoreDataBase(Context context, String actual_type) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.type = type;
-        TABLE_NAME = "score_"+type;
+        this.actual_type = actual_type;
+        TABLE_NAME = "score_"+actual_type;
         dbase = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + type + " TEXT PRIMARY KEY, " + "score" + " INTEGER DEFAULT 0)";
-        db.execSQL(CREATE_TABLE);
+        for (String type:MainActivity.types) {
+            try {
+                String CREATE_TABLE = "CREATE TABLE " + "score_" + type + " (" + type + " TEXT PRIMARY KEY, " + "score" + " INTEGER DEFAULT 0)";
+                db.execSQL(CREATE_TABLE);
+            } catch (SQLiteException e) {
+                Log.d("DataBase",e.toString());
+            }
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        for (String type:MainActivity.types) {
+            try {
+                String CREATE_TABLE = "CREATE TABLE " + "score_" + type + " (" + type + " TEXT PRIMARY KEY, " + "score" + " INTEGER DEFAULT 0)";
+                db.execSQL(CREATE_TABLE);
+            } catch (SQLiteException e) {
+                Log.d("DataBase",e.toString());
+            }
+        }
     }
 
 
     public void saveScore(String mot, int score) {
         ContentValues values = new ContentValues();
-        values.put(type,mot);
+        values.put(actual_type,mot);
         values.put("score",score);
         dbase.insertWithOnConflict(TABLE_NAME,null,values,SQLiteDatabase.CONFLICT_REPLACE);
     }
@@ -50,7 +60,7 @@ public class ScoreDataBase extends SQLiteOpenHelper {
         Cursor cursor = dbase.query(
                 TABLE_NAME,
                 new String[]{"score"},
-                type + "=?",
+                actual_type + "=?",
                 new String[]{mot},
                 null,  null, null
                 );
@@ -60,15 +70,4 @@ public class ScoreDataBase extends SQLiteOpenHelper {
         return score;
     }
 
-    public Map<String,Integer> getAllScores() {
-        Map<String,Integer> scores = new HashMap<>();
-        Cursor cursor = dbase.query(TABLE_NAME,null,null,null,null,null,null);
-        while (cursor.moveToNext()) {
-            String mot = cursor.getString(cursor.getColumnIndexOrThrow(type));
-            int score = cursor.getInt(cursor.getColumnIndexOrThrow("score"));
-            scores.put(mot,score);
-        }
-        cursor.close();
-        return scores;
-    }
 }

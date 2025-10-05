@@ -1,9 +1,7 @@
 package com.example.deutschquiz;
 
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,23 +15,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class WriteActivity extends AppCompatActivity {
 
-
-    Random rand = new Random();
     List<String[]> dictionnaire = new ArrayList<>();
     TextView question;
     EditText editTextUserInput;
     Button buttonSubmit, next, main, traduction;
     TextView textViewResult;
     int questionIndex = 0;
+    private ScoreDataBase scores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
+
+        scores = new ScoreDataBase(this,getIntent().getStringExtra("destination"));
 
         main = findViewById(R.id.main_menu);
         question = findViewById(R.id.question);
@@ -60,9 +58,7 @@ public class WriteActivity extends AppCompatActivity {
             conteneur.addView(t);
         }
 
-        main.setOnClickListener(v -> {
-            finish();
-        });
+        main.setOnClickListener(v -> finish());
 
         updateQuestion();
         next.setOnClickListener(v -> {
@@ -72,26 +68,23 @@ public class WriteActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
-
-        questionIndex = this.rand.nextInt(dictionnaire.size());
+        questionIndex = QCMActivity.indexSuivant(scores, dictionnaire);
         question.setText(dictionnaire.get(questionIndex)[1]);
         buttonSubmit.setOnClickListener( v-> {
             String userInput = editTextUserInput.getText().toString().toLowerCase();
             checkAnswer(userInput.equals(dictionnaire.get(questionIndex)[0].toLowerCase()));
         });
 
-        traduction.setOnClickListener(v -> {
-            editTextUserInput.setText(dictionnaire.get(questionIndex)[0]);
-        });
+        traduction.setOnClickListener(v -> editTextUserInput.setText(dictionnaire.get(questionIndex)[0]));
     }
 
     private void checkAnswer(boolean isTrue) {
         if (isTrue) {
             textViewResult.setText("✅ Bonne réponse !");
-            textViewResult.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            textViewResult.setTextColor(MainActivity.couleurW);
         } else {
             textViewResult.setText("❌ Mauvaise réponse.");
-            textViewResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            textViewResult.setTextColor(MainActivity.couleurL);
         }
     }
 }

@@ -10,7 +10,6 @@ import  java.util.Random;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class QCMActivity extends AppCompatActivity {
-    Random rand = new Random();
+    private static final Random rand = new Random();
     LinearLayout conteneur;
     TextView questionText, feedbackText;
     Button next, variation, image_button, main;
@@ -37,7 +36,6 @@ public class QCMActivity extends AppCompatActivity {
 
     List<String[]> dictionnaire = new ArrayList<>();
 
-    double longeur_variable;
 
     public ScoreDataBase scores;
 
@@ -65,7 +63,6 @@ public class QCMActivity extends AppCompatActivity {
             t.setText(e.toString());
             conteneur.addView(t);
         }
-        longeur_variable = this.dictionnaire.size();
 
         main = findViewById(R.id.main_menu);
         conteneur  = findViewById(R.id.conteneur_reponses);
@@ -141,7 +138,7 @@ public class QCMActivity extends AppCompatActivity {
         }
     }
     private int aleatoireExclu(int num) {
-        int res = this.rand.nextInt(dictionnaire.size());
+        int res = rand.nextInt(dictionnaire.size());
         if (res == num) {
             return this.aleatoireExclu(num);
         }
@@ -156,13 +153,17 @@ public class QCMActivity extends AppCompatActivity {
             feedbackText.setTextColor(MainActivity.couleurL);
         }
     }
-    private int indexSuivant() {
+    public static int indexSuivant(ScoreDataBase scoreDB, List<String[]> dico) {
+        double longueur = 0;
+        for (int i = 0; i<dico.size();i++) {
+            longueur += Math.pow(2,scoreDB.getScore(dico.get(i)[0]));
+        }
         int index = 0;
-        double val = this.rand.nextFloat()*this.longeur_variable;
-        double sum = Math.pow(2,scores.getScore(dictionnaire.get(0)[0]));
-        while (sum-1 < val) {
+        double val = QCMActivity.rand.nextFloat()*longueur;
+        double sum = Math.pow(2,scoreDB.getScore(dico.get(0)[0]));
+        while (sum < val && index < dico.size() - 1) {
             index++;
-            sum += Math.pow(2,scores.getScore(dictionnaire.get(index)[0]));
+            sum += Math.pow(2,scoreDB.getScore(dico.get(index)[0]));
         }
         return index;
     }
@@ -172,9 +173,9 @@ public class QCMActivity extends AppCompatActivity {
 
         first_FLAG = true;
         nb++;
-        questionIndex = indexSuivant();
+        questionIndex = indexSuivant(scores, dictionnaire);
         List<String> answers = new ArrayList<>();
-        int r = this.rand.nextInt(nbReponses);
+        int r = rand.nextInt(nbReponses);
         if (imagemode) {
             image.setImageResource(getResources().getIdentifier(dictionnaire.get(questionIndex)[0].toLowerCase(), "drawable", getPackageName()));
         }
@@ -196,15 +197,12 @@ public class QCMActivity extends AppCompatActivity {
                 if ((r+ finalI)%nbReponses==0) {
                     if (first_FLAG) {
                         scores.saveScore(target_answer,scores.getScore(target_answer)-1);
-                        longeur_variable-=Math.pow(2,scores.getScore(target_answer));
                     }
                     answer.setBackgroundColor(MainActivity.couleurW);
                 } else {
                     if (first_FLAG) {
-                        longeur_variable+=Math.pow(2,scores.getScore(target_answer));
                         scores.saveScore(target_answer,scores.getScore(target_answer)+1);
                         String obtained_answer = answers.get((r+finalI)%nbReponses);
-                        longeur_variable+=Math.pow(2,scores.getScore(obtained_answer));
                         scores.saveScore(obtained_answer,scores.getScore(obtained_answer)+1);
                     }
                     answer.setBackgroundColor(MainActivity.couleurL);
