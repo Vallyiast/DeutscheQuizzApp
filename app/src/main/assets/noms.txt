@@ -1,1 +1,4 @@
 das Gehalt;le salaire
+die Umfrage;le sondage
+die Arbeitslosigkeit;le chomage
+die Stelle;le poste

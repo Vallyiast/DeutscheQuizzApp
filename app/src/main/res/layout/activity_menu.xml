@@ -32,7 +32,7 @@
 
     <Button
         android:id="@+id/QCM"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
         android:backgroundTint="#3d3729"
@@ -40,7 +40,7 @@
 
     <Button
         android:id="@+id/Write"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:textColor="#ffffff"
         android:layout_height="wrap_content"
         android:backgroundTint="#3d3729"
@@ -48,11 +48,19 @@
 
     <Button
         android:id="@+id/List"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:textColor="#ffffff"
         android:layout_height="wrap_content"
         android:backgroundTint="#3d3729"
         android:text="Liste" />
+
+    <Button
+        android:id="@+id/Guess"
+        android:layout_width="150dp"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3d3729"
+        android:text="Guess" />
 
 
 </LinearLayout>

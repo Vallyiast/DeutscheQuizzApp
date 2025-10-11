@@ -1,0 +1,87 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:id="@+id/conteneur"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@drawable/background_spiral_grad"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/main_menu"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:text="Menu"
+        android:textColor="#ffffff"
+        android:backgroundTint="#3d3729"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFc700"
+        android:padding="6dp"
+        android:text="Trouver la traduction"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/cadre"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="12dp"
+        android:background="#3d3730"
+        android:alpha="0.995"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/word"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="42dp"
+            android:text="Word"
+            android:textColor="#ffffff"
+            android:backgroundTint="#3d3729"
+            android:textAlignment="center" />
+
+
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/forget"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:backgroundTint="#c63927"
+                android:text="F"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/recall"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:backgroundTint="#317f43"
+                android:text="R"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

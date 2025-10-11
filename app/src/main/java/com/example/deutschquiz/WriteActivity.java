@@ -41,22 +41,7 @@ public class WriteActivity extends AppCompatActivity {
         next = findViewById(R.id.next_button);
         traduction = findViewById(R.id.traduction);
 
-        try {
-            AssetManager am = getAssets();
-            InputStream is = am.open(getIntent().getStringExtra("destination") + ".txt");
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                dictionnaire.add(ligne.split(";"));
-            }
-            reader.close();
-        } catch (IOException e) {
-            LinearLayout conteneur = findViewById(R.id.conteneur);
-            TextView t = new TextView(this);
-            t.setText(e.toString());
-            conteneur.addView(t);
-        }
+        dictionnaire = CommonUses.getThemeList(this,getIntent().getStringExtra("destination"));
 
         main.setOnClickListener(v -> finish());
 
