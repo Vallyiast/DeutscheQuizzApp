@@ -1,0 +1,45 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@drawable/background_gradient"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/main_menu"
+        android:text="Menu"
+        style="@style/ButtonMenu" />
+
+    <TextView
+        android:id="@+id/name_text"
+        android:text="Menu "
+        style="@style/Bandeau" />
+
+    <Button
+        android:id="@+id/QCM"
+        android:layout_width="170dp"
+        style="@style/ButtonCommon"
+        android:text="Questions à choix" />
+
+    <Button
+        android:id="@+id/Write"
+        android:layout_width="170dp"
+        style="@style/ButtonCommon"
+        android:text="Ecriture" />
+
+    <Button
+        android:id="@+id/List"
+        android:layout_width="170dp"
+        style="@style/ButtonCommon"
+        android:text="Liste" />
+
+    <Button
+        android:id="@+id/Guess"
+        android:layout_width="170dp"
+        style="@style/ButtonCommon"
+        android:text="Guess" />
+
+</LinearLayout>

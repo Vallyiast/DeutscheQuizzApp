@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/conteneur"
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient"
+    android:weightSum="2"
+    android:padding="16dp">
+
+
+
+    <Button
+        android:id="@+id/main_menu"
+        android:text="Menu"
+        style="@style/ButtonMenu" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/image_mode_button"
+            android:layout_width="150dp"
+            style="@style/ButtonCommon"
+            android:text="To image mode" />
+
+        <Button
+            android:id="@+id/variation_button"
+            android:layout_width="150dp"
+            style="@style/ButtonCommon"
+            android:text="Fr->De" />
+
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="8" />
+
+    <ImageView
+        android:id="@+id/monImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="image" />
+
+    <TextView
+        android:id="@+id/question_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Question"
+        android:color="@color/white"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/conteneur_reponses"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/feedback_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\?"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/next_button"
+        style="@style/ButtonCommon"
+        android:width="200dp"
+        android:text="Suivant" />
+
+</LinearLayout>
