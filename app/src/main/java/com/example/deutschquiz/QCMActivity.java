@@ -69,6 +69,7 @@ public class QCMActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 nbReponses = progress+1;
                 addButtons();
+                updateQuestion();
             }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -115,7 +116,7 @@ public class QCMActivity extends AppCompatActivity {
         this.answersButtons = new ArrayList<>();
         this.conteneur.removeAllViews();
         for (int i = 0;i<nbReponses;i++) {
-            Button button = new Button(new ContextThemeWrapper(this, R.style.styleButton));
+            Button button = new Button(new ContextThemeWrapper(this, R.style.ButtonCommon));
             button.setBackgroundColor(MainActivity.couleurBR);
 
             this.conteneur.addView(button);

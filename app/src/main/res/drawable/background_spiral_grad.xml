@@ -4,8 +4,8 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#FF7F50"
-                android:endColor="#FFD700"
+                android:startColor="#b1894e"
+                android:endColor="#b39700"
                 android:angle="45" />
         </shape>
     </item>
@@ -17,7 +17,7 @@
             android:src="@drawable/spiral"
             android:gravity="center"
 
-            android:alpha="128" /> <!-- 128 = 50% transparent -->
+            android:alpha="0.05" /> <!-- 128 = 50% transparent -->
 
     </item>
 

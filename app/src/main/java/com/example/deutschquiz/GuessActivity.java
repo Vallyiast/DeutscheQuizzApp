@@ -45,9 +45,12 @@ public class GuessActivity extends AppCompatActivity {
         updateQuestion();
         forget_button.setOnClickListener(v -> {
             indexList.add(indexCourant);
+            cadre.animate().rotationBy(360f).setDuration(300).start();
+
             updateQuestion();
         });
         recall_button.setOnClickListener(v -> {
+            cadre.animate().rotationBy(-360f).setDuration(300).start();
             updateQuestion();
         });
     }
@@ -64,7 +67,8 @@ public class GuessActivity extends AppCompatActivity {
 
             boutton_mot.setOnClickListener(v -> {
                 changement_mot = 1 - changement_mot;
-                cadre.animate().rotationBy(360f).setDuration(300).start();
+                cadre.animate().rotationYBy(360f).setDuration(300).start();
+
                 boutton_mot.setText(dictionnaire.get(indexCourant)[changement_mot]);
             });
         }

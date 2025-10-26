@@ -37,6 +37,12 @@
         android:text="Liste" />
 
     <Button
+        android:id="@+id/Conjugaison"
+        android:layout_width="170dp"
+        style="@style/ButtonCommon"
+        android:text="Conjugaison" />
+
+    <Button
         android:id="@+id/Guess"
         android:layout_width="170dp"
         style="@style/ButtonCommon"

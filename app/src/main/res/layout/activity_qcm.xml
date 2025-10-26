@@ -10,14 +10,11 @@
     android:padding="16dp">
 
 
+
     <Button
         android:id="@+id/main_menu"
-        android:layout_width="180dp"
-        android:layout_height="60dp"
         android:text="Menu"
-        android:textColor="#ffffff"
-        android:backgroundTint="#3d3729"
-        android:textAlignment="center" />
+        style="@style/ButtonMenu" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,21 +25,13 @@
         <Button
             android:id="@+id/image_mode_button"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:backgroundTint="#3d3729"
+            style="@style/ButtonCommon"
             android:text="To image mode" />
 
         <Button
             android:id="@+id/variation_button"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:layout_margin="4dp"
-            android:gravity="center"
-            android:backgroundTint="#3d3729"
+            style="@style/ButtonCommon"
             android:text="Fr->De" />
 
     </LinearLayout>
@@ -89,10 +78,8 @@
 
     <Button
         android:id="@+id/next_button"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:backgroundTint="#3d3729"
+        style="@style/ButtonCommon"
+        android:width="200dp"
         android:text="Suivant" />
 
 </LinearLayout>

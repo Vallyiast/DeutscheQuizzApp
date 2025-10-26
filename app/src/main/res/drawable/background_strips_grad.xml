@@ -3,22 +3,24 @@
     <!-- Couche 1 : le dégradé -->
     <item>
         <shape android:shape="rectangle">
+
             <gradient
                 android:startColor="#b1894e"
                 android:endColor="#b39700"
-                android:angle="45" />
+                android:angle="40" />
         </shape>
     </item>
 
     <!-- Couche 2 : l’image semi-transparente -->
     <item>
-
         <bitmap
-            android:src="@drawable/spiral"
-            android:gravity="center"
 
-            android:alpha="0.05" /> <!-- 128 = 50% transparent -->
-
+            android:gravity="fill"
+            android:tileMode="repeat"
+            android:alpha="0.05"
+            android:src="@drawable/strip_stripped" /> <!-- 128 = 50% transparent -->
     </item>
+
+
 
 </layer-list>

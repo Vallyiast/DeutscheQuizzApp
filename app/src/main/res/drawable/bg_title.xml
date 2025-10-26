@@ -1,4 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<bg_title.xml xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFD54F" /> <!-- jaune doux -->
+    <padding
+        android:top="8dp"
+        android:bottom="8dp" />
 
-</bg_title.xml>
+    <gradient
+        android:startColor="#FFE082"
+        android:endColor="#FFC107"
+        android:angle="90" />
+    <stroke
+        android:width="2dp"
+        android:color="#BFAf00" /> <!-- bord léger -->
+</shape>

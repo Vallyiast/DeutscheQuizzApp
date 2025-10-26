@@ -24,7 +24,7 @@ public class CommonUses {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String ligne;
             while ((ligne = reader.readLine()) != null) {
-                dictionnaire.add(ligne.split(";"));
+                dictionnaire.add(ligne.split(";",-1));
             }
             reader.close();
         } catch (IOException e) {

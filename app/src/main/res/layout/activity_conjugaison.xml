@@ -1,80 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/conteneur"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/conteneur"
-    android:orientation="vertical"
     android:background="@drawable/background_gradient"
-    android:weightSum="2"
-    android:padding="16dp">
-
-
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:weightSum="2">
 
     <Button
         android:id="@+id/main_menu"
-        android:text="Menu"
-        style="@style/ButtonMenu" />
+        style="@style/ButtonMenu"
+        android:text="Menu" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+    <TextView
+        android:id="@+id/title"
+        style="@style/Bandeau"
+        android:text="Conjugaison" />
 
-        <Button
-            android:id="@+id/image_mode_button"
-            android:layout_width="150dp"
-            style="@style/ButtonCommon"
-            android:text="To image mode" />
 
-        <Button
-            android:id="@+id/variation_button"
-            android:layout_width="150dp"
-            style="@style/ButtonCommon"
-            android:text="Fr->De" />
 
-    </LinearLayout>
-
-    <SeekBar
-        android:id="@+id/seekBar"
+    <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="8" />
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/monImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="image" />
+        <LinearLayout
+            android:id="@+id/container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2">
 
-    <TextView
-        android:id="@+id/question_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Question"
-        android:color="@color/white"
-        android:textAlignment="center"
-        android:textSize="24sp" />
+            <LinearLayout
+                android:id="@+id/leftColumn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
 
+            <LinearLayout
+                android:id="@+id/rightColumn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/conteneur_reponses"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp">
+        </LinearLayout>
 
-    </LinearLayout>
+        <!-- couche pour dessiner les lignes -->
+        <com.example.deutschquiz.LinesView
+            android:id="@+id/linesView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/feedback_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="\?"
-        android:textSize="18sp" />
+    </FrameLayout>
+
 
     <Button
         android:id="@+id/next_button"

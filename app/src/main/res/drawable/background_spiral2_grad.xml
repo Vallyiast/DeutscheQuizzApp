@@ -1,6 +1,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Couche 1 : le dégradé -->
+    <!-- Couche 1 : dégradé -->
     <item>
         <shape android:shape="rectangle">
 
@@ -11,14 +11,13 @@
         </shape>
     </item>
 
-    <!-- Couche 2 : l’image semi-transparente -->
+    <!-- Couche 2 : image semi-transparente -->
     <item>
         <bitmap
 
-            android:gravity="fill"
-            android:tileMode="repeat"
-            android:alpha="0.05"
-            android:src="@drawable/strip_stripped" /> <!-- 128 = 50% transparent -->
+            android:gravity="center"
+            android:alpha="0.02"
+            android:src="@drawable/illusion3" />
     </item>
 
 

@@ -8,13 +8,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuVerbesActivity extends AppCompatActivity {
-    Button button_qcm, button_write, button_list, button_menu, button_guess;
+    Button button_qcm, button_write, button_list, button_menu, button_guess, button_conjugaison;
     TextView name_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_menu_verbes);
 
         button_qcm = findViewById(R.id.QCM);
         button_write = findViewById(R.id.Write);
@@ -22,6 +22,7 @@ public class MenuVerbesActivity extends AppCompatActivity {
         button_menu = findViewById(R.id.main_menu);
         name_text = findViewById(R.id.name_text);
         button_guess = findViewById(R.id.Guess);
+        button_conjugaison = findViewById(R.id.Conjugaison);
 
         name_text.setText(getIntent().getStringExtra("destination"));
 
@@ -38,6 +39,11 @@ public class MenuVerbesActivity extends AppCompatActivity {
         button_write.setOnClickListener(v -> {
             Intent intent = new Intent(MenuVerbesActivity.this, WriteActivity.class);
             intent.putExtra("destination", getIntent().getStringExtra("destination"));
+            startActivity(intent);
+        });
+
+        button_conjugaison.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuVerbesActivity.this, ConjugaisonActivity.class);
             startActivity(intent);
         });
 

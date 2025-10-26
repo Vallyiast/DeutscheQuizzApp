@@ -28,6 +28,12 @@
             android:name=".GuessActivity"
             android:exported="false" />
         <activity
+            android:name=".ConjugaisonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuVerbesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
