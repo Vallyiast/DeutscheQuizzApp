@@ -1,56 +1,65 @@
 package com.example.deutschquiz;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 public class MenuActivity extends AppCompatActivity {
-    Button button_qcm, button_write, button_list, button_menu, button_guess;
-    TextView name_text;
+
+    Button boutonQuiz, boutonList, boutonGuess, boutonWrite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_menu_fragment);
 
-        button_qcm = findViewById(R.id.QCM);
-        button_write = findViewById(R.id.Write);
-        button_list = findViewById(R.id.List);
-        button_menu = findViewById(R.id.main_menu);
-        name_text = findViewById(R.id.name_text);
-        button_guess = findViewById(R.id.Guess);
+        boutonGuess = findViewById(R.id.Guess);
+        boutonQuiz = findViewById(R.id.Quiz);
+        boutonList = findViewById(R.id.Liste);
+        boutonWrite = findViewById(R.id.Write);
 
-        name_text.setText(getIntent().getStringExtra("destination"));
+        // Affiche le premier fragment au lancement
+        if (savedInstanceState == null) {
 
-        button_menu.setOnClickListener(v -> {
-            finish();
+            boutonGuess.setBackgroundColor(Color.parseColor("#3d3729"));
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragment_container_view, GuessFragment.class, null)
+                    .commit();
+        }
+
+        // Gestion de la bannière
+        boutonQuiz.setOnClickListener(v ->  {
+            switchToFragment(new QuizFragment());
+            v.setBackgroundColor(Color.parseColor("#3d3729"));
         });
-
-        button_qcm.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, QCMActivity.class);
-            intent.putExtra("destination", getIntent().getStringExtra("destination"));
-            startActivity(intent);
+        boutonGuess.setOnClickListener(v -> {
+            switchToFragment(new GuessFragment());
+            v.setBackgroundColor(Color.parseColor("#3d3729"));
         });
-
-        button_write.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, WriteActivity.class);
-            intent.putExtra("destination", getIntent().getStringExtra("destination"));
-            startActivity(intent);
+        boutonList.setOnClickListener(v -> {
+            switchToFragment(new ListFragment());
+                v.setBackgroundColor(Color.parseColor("#3d3729"));
         });
-
-        button_list.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, ListActivity.class);
-            intent.putExtra("destination", getIntent().getStringExtra("destination"));
-            startActivity(intent);
+        boutonWrite.setOnClickListener(v -> {
+            switchToFragment(new WriteFragment());
+            v.setBackgroundColor(Color.parseColor("#3d3729"));
         });
+    }
 
-        button_guess.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, GuessActivity.class);
-            intent.putExtra("destination", getIntent().getStringExtra("destination"));
-            startActivity(intent);
-        });
+    private void switchToFragment(Fragment fragment) {
+
+        boutonGuess.setBackgroundColor(Color.parseColor("#ffd03c"));
+        boutonWrite.setBackgroundColor(Color.parseColor("#ffd03c"));
+        boutonList.setBackgroundColor(Color.parseColor("#ffd03c"));
+        boutonQuiz.setBackgroundColor(Color.parseColor("#ffd03c"));
+
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                .replace(R.id.fragment_container_view,fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

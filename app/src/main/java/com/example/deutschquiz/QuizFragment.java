@@ -1,25 +1,23 @@
 package com.example.deutschquiz;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import  java.util.Random;
-
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class QCMActivity extends AppCompatActivity {
+import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class QuizFragment extends Fragment {
     private static final Random rand = new Random();
     LinearLayout conteneur;
     TextView questionText, feedbackText;
@@ -41,25 +39,24 @@ public class QCMActivity extends AppCompatActivity {
 
     boolean first_FLAG;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qcm);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_qcm, container, false);
 
-        scores = new ScoreDataBase(this,getIntent().getStringExtra("destination"));
+        scores = new ScoreDataBase(requireContext(),requireActivity().getIntent().getStringExtra("destination"));
 
-        dictionnaire = CommonUses.getThemeList(this,getIntent().getStringExtra("destination"));
+        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
 
-        main = findViewById(R.id.main_menu);
-        conteneur  = findViewById(R.id.conteneur_reponses);
-        questionText = findViewById(R.id.question_text);
-        feedbackText = findViewById(R.id.feedback_text);
-        next = findViewById(R.id.next_button);
-        variation = findViewById(R.id.variation_button);
-        image_button = findViewById(R.id.image_mode_button);
-        image = findViewById(R.id.monImage);
+        main = view.findViewById(R.id.main_menu);
+        conteneur  = view.findViewById(R.id.conteneur_reponses);
+        questionText = view.findViewById(R.id.question_text);
+        feedbackText = view.findViewById(R.id.feedback_text);
+        next = view.findViewById(R.id.next_button);
+        variation = view.findViewById(R.id.variation_button);
+        image_button = view.findViewById(R.id.image_mode_button);
+        image = view.findViewById(R.id.monImage);
         image.setVisibility(View.GONE);
 
-        seekBar = findViewById(R.id.seekBar);
+        seekBar = view.findViewById(R.id.seekBar);
         seekBar.setProgress(nbReponses-1);
         addButtons();
 
@@ -75,7 +72,7 @@ public class QCMActivity extends AppCompatActivity {
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        main.setOnClickListener(v -> finish());
+        main.setOnClickListener(v -> requireActivity().finish());
         variation.setOnClickListener(v -> {
             if (varlangDetoFr==0) {
                 varlangDetoFr = 1;
@@ -95,6 +92,7 @@ public class QCMActivity extends AppCompatActivity {
                 varlangDetoFr = 0;
                 nbReponses = 3;
                 addButtons();
+                updateQuestion();
             } else {
                 imagemode = false;
                 image_button.setText("To image mode");
@@ -104,11 +102,13 @@ public class QCMActivity extends AppCompatActivity {
                 seekBar.setVisibility(View.VISIBLE);
                 image.setVisibility(View.GONE);
                 variation.setVisibility(View.VISIBLE);
+                updateQuestion();
             }
         });
 
         updateQuestion();
         next.setOnClickListener(v -> updateQuestion());
+        return view;
     }
 
     private void addButtons() {
@@ -116,7 +116,7 @@ public class QCMActivity extends AppCompatActivity {
         this.answersButtons = new ArrayList<>();
         this.conteneur.removeAllViews();
         for (int i = 0;i<nbReponses;i++) {
-            Button button = new Button(new ContextThemeWrapper(this, R.style.ButtonCommon));
+            Button button = new Button(new ContextThemeWrapper(requireContext(), R.style.ButtonCommon));
             button.setBackgroundColor(MainActivity.couleurBR);
 
             this.conteneur.addView(button);
@@ -145,7 +145,7 @@ public class QCMActivity extends AppCompatActivity {
             longueur += Math.pow(2,scoreDB.getScore(dico.get(i)[0]));
         }
         int index = 0;
-        double val = QCMActivity.rand.nextFloat()*longueur;
+        double val = QuizFragment.rand.nextFloat()*longueur;
         double sum = Math.pow(2,scoreDB.getScore(dico.get(0)[0]));
         while (sum < val && index < dico.size() - 1) {
             index++;
@@ -163,7 +163,7 @@ public class QCMActivity extends AppCompatActivity {
         List<String> answers = new ArrayList<>();
         int r = rand.nextInt(nbReponses);
         if (imagemode) {
-            image.setImageResource(getResources().getIdentifier(dictionnaire.get(questionIndex)[0].toLowerCase(), "drawable", getPackageName()));
+            image.setImageResource(getResources().getIdentifier(dictionnaire.get(questionIndex)[0].toLowerCase(), "drawable", requireContext().getPackageName()));
         }
         answers.add(dictionnaire.get(questionIndex)[varlangDetoFr]);
         for (int i = 1; i < nbReponses; i++) {

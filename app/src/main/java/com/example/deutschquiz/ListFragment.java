@@ -2,17 +2,17 @@ package com.example.deutschquiz;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,28 +21,27 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ListFragment extends Fragment {
 
     Button main;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_list, container, false);
 
-        ScoreDataBase scores = new ScoreDataBase(this, getIntent().getStringExtra("destination"));
+        ScoreDataBase scores = new ScoreDataBase(requireContext(), requireActivity().getIntent().getStringExtra("destination"));
 
-        main = findViewById(R.id.main_menu);
-        main.setOnClickListener(v -> finish());
+        main = view.findViewById(R.id.main_menu);
+        main.setOnClickListener(v -> requireActivity().finish());
 
-        ListView maListe = findViewById(R.id.maListe);
+        ListView maListe = view.findViewById(R.id.maListe);
 
         // Données à afficher
         List<String[]> data = new ArrayList<>();
 
         try {
-            AssetManager am = getAssets();
-            InputStream is = am.open(getIntent().getStringExtra("destination") + ".txt");
+            AssetManager am = requireContext().getAssets();
+            InputStream is = am.open( requireActivity().getIntent().getStringExtra("destination")+".txt");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String ligne;
@@ -53,14 +52,11 @@ public class ListActivity extends AppCompatActivity {
             }
             reader.close();
         } catch (IOException e) {
-            LinearLayout conteneur = findViewById(R.id.conteneur);
-            TextView t = new TextView(this);
-            t.setText(e.toString());
-            conteneur.addView(t);
+            Log.d("ListFragment","verbes list not found");
         }
 
 
-        ArrayAdapter<String[]> adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.textLeft, data) {
+        ArrayAdapter<String[]> adapter = new ArrayAdapter<>(requireContext(), R.layout.list_item, R.id.textLeft, data) {
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -84,5 +80,6 @@ public class ListActivity extends AppCompatActivity {
         };
 
         maListe.setAdapter(adapter);
+        return view;
     }
 }

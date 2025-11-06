@@ -1,0 +1,73 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/background_gradient"
+    android:layout_height="match_parent">
+
+
+    <!-- res/layout/example_activity.xml -->
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:name="com.example.deutschquiz.GuessFragment"
+        tools:layout="@layout/activity_guess" />
+
+
+    <LinearLayout
+        style="@style/Bandeau"
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/Quiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="1dp"
+            android:backgroundTint="#ffd03c"
+            android:text="Quiz"
+            android:textColor="#ffffff" />
+
+
+        <Button
+            android:id="@+id/Write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="1dp"
+            android:backgroundTint="#ffd03c"
+            android:text="Write"
+            android:textColor="#ffffff" />
+
+
+        <Button
+            android:id="@+id/Liste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="1dp"
+            android:backgroundTint="#ffd03c"
+            android:text="List"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/Guess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="1dp"
+            android:backgroundTint="#ffd03c"
+            android:text="Guess"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+</LinearLayout>

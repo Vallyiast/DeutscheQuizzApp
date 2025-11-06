@@ -2,12 +2,14 @@ package com.example.deutschquiz;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class WriteActivity extends AppCompatActivity {
+public class WriteFragment extends Fragment {
     Random rand = new Random();
     final List<Character> voyelles = Arrays.asList('a', 'e', 'i', 'o', 'u', 'ä', 'ü', 'ï', 'ö', 'ë');
     final List<Character> consonnes = Arrays.asList('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z','ß');
@@ -33,30 +35,29 @@ public class WriteActivity extends AppCompatActivity {
     private ScoreDataBase scores;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_write, container, false);
 
-        scores = new ScoreDataBase(this,getIntent().getStringExtra("destination"));
+        scores = new ScoreDataBase(getContext(),requireActivity().getIntent().getStringExtra("destination"));
 
-        main = findViewById(R.id.main_menu);
-        textview_question = findViewById(R.id.question);
-        textview_reponse = findViewById(R.id.reponse);
-        buttonSubmit = findViewById(R.id.buttonSubmit);
-        next = findViewById(R.id.next_button);
-        traduction = findViewById(R.id.traduction);
-        lettres_container = findViewById(R.id.lettres_container);
+        main = view.findViewById(R.id.main_menu);
+        textview_question = view.findViewById(R.id.question);
+        textview_reponse = view.findViewById(R.id.reponse);
+        buttonSubmit = view.findViewById(R.id.buttonSubmit);
+        next = view.findViewById(R.id.next_button);
+        traduction = view.findViewById(R.id.traduction);
+        lettres_container = view.findViewById(R.id.lettres_container);
 
-        character_buttons.add(findViewById(R.id.lettre1));
-        character_buttons.add(findViewById(R.id.lettre2));
-        character_buttons.add(findViewById(R.id.lettre3));
-        character_buttons.add(findViewById(R.id.lettre4));
-        character_buttons.add(findViewById(R.id.lettre5));
-        character_buttons.add(findViewById(R.id.lettre6));
+        character_buttons.add(view.findViewById(R.id.lettre1));
+        character_buttons.add(view.findViewById(R.id.lettre2));
+        character_buttons.add(view.findViewById(R.id.lettre3));
+        character_buttons.add(view.findViewById(R.id.lettre4));
+        character_buttons.add(view.findViewById(R.id.lettre5));
+        character_buttons.add(view.findViewById(R.id.lettre6));
 
-        dictionnaire = CommonUses.getThemeList(this,getIntent().getStringExtra("destination"));
+        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
 
-        main.setOnClickListener(v -> finish());
+        main.setOnClickListener(v -> requireActivity().finish());
 
         updateQuestion();
         next.setOnClickListener(v -> {
@@ -64,6 +65,7 @@ public class WriteActivity extends AppCompatActivity {
             textview_reponse.setText("");
             updateQuestion();
         });
+        return view;
     }
 
     /**
@@ -89,7 +91,7 @@ public class WriteActivity extends AppCompatActivity {
                 })
                 .start();
 
-        questionIndex = QCMActivity.indexSuivant(scores, dictionnaire);
+        questionIndex = QuizFragment.indexSuivant(scores, dictionnaire);
         textview_reponse.setText("");
         textview_reponse.setTextColor(Color.WHITE);
         textview_question.setText(dictionnaire.get(questionIndex)[1]);
@@ -153,7 +155,6 @@ public class WriteActivity extends AppCompatActivity {
 
         for (int i = 0; i<character_buttons.size();i++) {
             character_buttons.get(i).setText(copieLettres.get(i).toString());
-            int finalI = i;
             character_buttons.get(i).setOnClickListener(v -> {
                 textview_reponse.setText(String.format("%s%s",textview_reponse.getText(),((Button) v).getText()));
                 index_charactere_reponse++;

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         image.setImageResource(R.drawable.declinaisons);
 
         button_verbes.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MenuVerbesActivity.class);
+            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             intent.putExtra("destination", "verbes");
             startActivity(intent);
         });
@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("destination", "adverbes");
             startActivity(intent);
         });
-
-
         button_mots.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             intent.putExtra("destination", "cours_gluck");

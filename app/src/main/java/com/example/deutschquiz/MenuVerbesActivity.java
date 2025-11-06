@@ -31,13 +31,13 @@ public class MenuVerbesActivity extends AppCompatActivity {
         });
 
         button_qcm.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuVerbesActivity.this, QCMActivity.class);
+            Intent intent = new Intent(MenuVerbesActivity.this, QuizFragment.class);
             intent.putExtra("destination", getIntent().getStringExtra("destination"));
             startActivity(intent);
         });
 
         button_write.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuVerbesActivity.this, WriteActivity.class);
+            Intent intent = new Intent(MenuVerbesActivity.this, WriteFragment.class);
             intent.putExtra("destination", getIntent().getStringExtra("destination"));
             startActivity(intent);
         });
@@ -48,13 +48,13 @@ public class MenuVerbesActivity extends AppCompatActivity {
         });
 
         button_list.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuVerbesActivity.this, ListActivity.class);
+            Intent intent = new Intent(MenuVerbesActivity.this, ListFragment.class);
             intent.putExtra("destination", getIntent().getStringExtra("destination"));
             startActivity(intent);
         });
 
         button_guess.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuVerbesActivity.this, GuessActivity.class);
+            Intent intent = new Intent(MenuVerbesActivity.this, GuessFragment.class);
             intent.putExtra("destination", getIntent().getStringExtra("destination"));
             startActivity(intent);
         });

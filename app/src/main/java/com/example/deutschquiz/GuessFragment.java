@@ -3,18 +3,21 @@ package com.example.deutschquiz;
 import static android.view.View.INVISIBLE;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class GuessActivity extends AppCompatActivity {
+public class GuessFragment extends Fragment {
+
 
     Button main, forget_button,recall_button,boutton_mot;
     LinearLayout cadre;
@@ -26,21 +29,20 @@ public class GuessActivity extends AppCompatActivity {
     int changement_mot;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guess);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_guess, container, false);
 
-        main = findViewById(R.id.main_menu);
-        title = findViewById(R.id.title);
-        cadre = findViewById(R.id.cadre);
-        boutton_mot = findViewById(R.id.word);
-        forget_button = findViewById(R.id.forget);
-        recall_button = findViewById(R.id.recall);
+        main = view.findViewById(R.id.main_menu);
+        title = view.findViewById(R.id.title);
+        cadre = view.findViewById(R.id.cadre);
+        boutton_mot = view.findViewById(R.id.word);
+        forget_button = view.findViewById(R.id.forget);
+        recall_button = view.findViewById(R.id.recall);
 
-        dictionnaire = CommonUses.getThemeList(this,getIntent().getStringExtra("destination"));
+        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
         indexList = java.util.stream.IntStream.range(1, dictionnaire.size()).boxed().collect(java.util.stream.Collectors.toList());
         Collections.shuffle(indexList);
-        main.setOnClickListener(v -> finish());
+        main.setOnClickListener(v -> requireActivity().finish());
 
         updateQuestion();
         forget_button.setOnClickListener(v -> {
@@ -53,6 +55,8 @@ public class GuessActivity extends AppCompatActivity {
             cadre.animate().rotationBy(-360f).setDuration(300).start();
             updateQuestion();
         });
+
+        return view;
     }
 
     private void updateQuestion() {

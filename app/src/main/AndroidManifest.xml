@@ -13,19 +13,7 @@
         android:theme="@style/Theme.DeutschQuiz"
         tools:targetApi="31">
         <activity
-            android:name=".WriteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".QCMActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ListActivity"
-            android:exported="false" />
-        <activity
             android:name=".MenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GuessActivity"
             android:exported="false" />
         <activity
             android:name=".ConjugaisonActivity"
@@ -33,12 +21,12 @@
         <activity
             android:name=".MenuVerbesActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -38,7 +38,7 @@ public class ConjugaisonActivity extends AppCompatActivity {
         rightCol = findViewById(R.id.rightColumn);
         linesView = findViewById(R.id.linesView);
 
-        dictionnaire = CommonUses.getThemeList(this, "verbes");
+        dictionnaire = CommonUses.getThemeList(this.getAssets(), "verbes");
 
         updateQuestion();
 
