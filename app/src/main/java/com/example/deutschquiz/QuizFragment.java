@@ -127,12 +127,12 @@ public class QuizFragment extends Fragment {
             answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
             answer_button.setText(answers.get((correct_answer_index+i)%nbReponses));
             int finalI = i;
-            answer_button.setOnClickListener(v -> onAnswerClick(v, correct_answer_index, finalI,  answer_button, answers) );
+            answer_button.setOnClickListener(v -> onAnswerClick(correct_answer_index, finalI,  answer_button, answers) );
         }
     }
 
 
-    private void onAnswerClick(View v, int r, int i, Button answer_button, List<String> answers) {
+    private void onAnswerClick(int r, int i, Button answer_button, List<String> answers) {
         next.setVisibility(View.VISIBLE);
 
         String target_answer = dictionnary.get(questionIndex)[0];

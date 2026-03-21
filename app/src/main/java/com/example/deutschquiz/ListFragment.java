@@ -58,9 +58,6 @@ public class ListFragment extends Fragment {
 
         ArrayAdapter<String[]> adapter = new ArrayAdapter<>(requireContext(), R.layout.list_item, R.id.textLeft, data) {
 
-            private List<Boolean> states;   // état des checkbox
-
-           
 
             @NonNull
             @Override

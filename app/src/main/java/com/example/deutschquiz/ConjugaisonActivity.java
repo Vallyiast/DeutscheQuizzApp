@@ -51,8 +51,6 @@ public class ConjugaisonActivity extends AppCompatActivity {
             rbd.setText(conjugaisons[i]);
             rbd.setOnClickListener(v -> {
                 if (lastSelected != null) {
-                    PointF start = getCenter(lastSelected);
-                    PointF end = getCenter(v);
                     lastSelected = null;
                 }
             });

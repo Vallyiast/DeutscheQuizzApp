@@ -35,7 +35,7 @@ public class CommonUses {
 
     /**
      * Extrait de la base de données les indexes utiles du dictionnaire
-     * @param db
+     * @param db database
      * @return dictionnaire d'index utile
      */
     public static List<Integer> extractionDictionnaire(ScoreDataBase db, List<String[]> dictionnaire) {
