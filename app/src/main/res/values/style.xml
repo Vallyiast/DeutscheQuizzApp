@@ -4,33 +4,56 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:backgroundTint">@color/marron</item>
         <item name="android:layout_margin">2dp</item>
+
 
         <item name="android:shadowColor">#66000000</item>
         <item name="android:shadowDx">4</item>
         <item name="android:shadowDy">3</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">1</item>
+
     </style>
 
+    <style name="Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">#1B1B1B</item>
+        <item name="strokeColor">#000000</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="cornerRadius">20dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_margin">1dp</item>
+    </style>
+
+    <style name="ButtonCharacterDynamic" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">20dp</item>
+        <item name="strokeWidth">4dp</item>
+        <item name="strokeColor">@android:color/black</item>
+        <item name="android:backgroundTint">#1B1B1B</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="ButtonBottom" parent="Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
 
     <style name="ButtonCharacter">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:padding">1dp</item>
-        <item name="android:background">@drawable/unrounded</item>
         <item name="android:layout_margin">1dp</item>
-        <item name="android:backgroundTint">@color/marron</item>
+        <item name="android:backgroundTint">#000000</item>
     </style>
 
 
-    <style name="ButtonMenu">
+    <style name="ButtonMenu" parent="Button">
         <item name="android:layout_width">130dp</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:backgroundTint">@color/marron</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
 
         <item name="android:shadowColor">#660000</item>
         <item name="android:shadowDx">4</item>
@@ -42,11 +65,21 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#d222</item>
-        <item name="android:background">@drawable/bg_title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">26sp</item>
         <item name="android:gravity">center</item>
         <item name="android:elevation">14dp</item>
+    </style>
+
+    <style name="ButtonNext" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="backgroundTint">#1B1B1B</item>   <!-- button background -->
+        <item name="strokeColor">#000000</item>      <!-- border color -->
+        <item name="strokeWidth">2dp</item>          <!-- border width -->
+        <item name="cornerRadius">20dp</item>        <!-- rounded corners -->
+        <item name="android:layout_margin">8dp</item>
     </style>
 
 </resources>

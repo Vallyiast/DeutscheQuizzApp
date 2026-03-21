@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,32 +22,34 @@ public class WriteFragment extends Fragment {
     Random rand = new Random();
     final List<Character> voyelles = Arrays.asList('a', 'e', 'i', 'o', 'u', 'ä', 'ü', 'ï', 'ö', 'ë');
     final List<Character> consonnes = Arrays.asList('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z','ß');
-
     int index_charactere_reponse = 0;
     boolean FLAG_voyelle = true; //Flag supplémentaire utilisé lorsque la longueur du mot écrit dépasse celle de la traduction (ie le mot est faux)
     String reponse;
     List<String[]> dictionnaire = new ArrayList<>();
     TextView textview_question, textview_reponse;
-    Button buttonSubmit, next, main, traduction;
-    LinearLayout lettres_container;
+    Button next, main, evaluate;
+    MaterialCardView lettres_container, cadre;
 
     List<Button> character_buttons = new ArrayList<>();
     int questionIndex = 0;
     private ScoreDataBase scores;
+    private List<Integer> list_index;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_write, container, false);
 
         scores = new ScoreDataBase(getContext(),requireActivity().getIntent().getStringExtra("destination"));
+        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
+        list_index = CommonUses.extractionDictionnaire(scores,dictionnaire); //List des index utiles du dictionnaire
 
         main = view.findViewById(R.id.main_menu);
         textview_question = view.findViewById(R.id.question);
         textview_reponse = view.findViewById(R.id.reponse);
-        buttonSubmit = view.findViewById(R.id.buttonSubmit);
         next = view.findViewById(R.id.next_button);
-        traduction = view.findViewById(R.id.traduction);
+        evaluate = view.findViewById(R.id.evaluate);
         lettres_container = view.findViewById(R.id.lettres_container);
+        cadre = view.findViewById(R.id.cadre);
 
         character_buttons.add(view.findViewById(R.id.lettre1));
         character_buttons.add(view.findViewById(R.id.lettre2));
@@ -55,7 +58,6 @@ public class WriteFragment extends Fragment {
         character_buttons.add(view.findViewById(R.id.lettre5));
         character_buttons.add(view.findViewById(R.id.lettre6));
 
-        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
 
         main.setOnClickListener(v -> requireActivity().finish());
 
@@ -73,11 +75,9 @@ public class WriteFragment extends Fragment {
      */
     private void updateQuestion() {
         lettres_container.setVisibility(View.VISIBLE);
-        buttonSubmit.setVisibility(View.VISIBLE);
-        traduction.setVisibility(View.VISIBLE);
-
-        buttonSubmit.setAlpha(1.0f);
-        traduction.setAlpha(1.0f);
+        evaluate.setVisibility(View.VISIBLE);
+        next.setVisibility(View.INVISIBLE);
+        evaluate.setAlpha(1.0f);
 
         lettres_container.animate()
                 .alpha(0.0f)
@@ -91,30 +91,23 @@ public class WriteFragment extends Fragment {
                 })
                 .start();
 
-        questionIndex = QuizFragment.indexSuivant(scores, dictionnaire);
+        questionIndex = CommonUses.indexSuivant(scores, dictionnaire, list_index);
         textview_reponse.setText("");
         textview_reponse.setTextColor(Color.WHITE);
         textview_question.setText(dictionnaire.get(questionIndex)[1]);
+        cadre.setBackgroundColor(UsedColors.background_color);
+        cadre.setStrokeColor(UsedColors.border_color);
 
         index_charactere_reponse = 0;
         reponse = dictionnaire.get(questionIndex)[0].toLowerCase();
 
         updateCharacters();
 
+        evaluate.setOnClickListener(v -> {
 
-        buttonSubmit.setOnClickListener( v-> {
-            String userInput = textview_reponse.getText().toString().toLowerCase();
-            checkAnswer(userInput.equals(reponse.toLowerCase()));
-        });
-        traduction.setOnClickListener(v -> {
-            textview_reponse.setText(reponse);
-            traduction.animate().alpha(0.0f).setDuration(500)
-                    .withEndAction(() -> traduction.setVisibility(View.INVISIBLE))
-                    .start();
-            buttonSubmit.animate().alpha(0.0f).setDuration(500)
-                    .withEndAction(() -> traduction.setVisibility(View.INVISIBLE))
-                    .start();
-            lettres_container.setVisibility(View.INVISIBLE);
+            next.setVisibility(View.VISIBLE);
+            checkAnswer(reponse.equals(textview_reponse.getText().toString().toLowerCase()));
+
         });
     }
 
@@ -165,18 +158,19 @@ public class WriteFragment extends Fragment {
 
     private void checkAnswer(boolean isTrue) {
         if (isTrue) {
-            textview_reponse.setTextColor(MainActivity.couleurW);
-            traduction.animate()
+            textview_reponse.setTextColor(UsedColors.light_color_Win);
+            cadre.setBackgroundColor(UsedColors.dark_color_Win);
+            cadre.setStrokeColor(UsedColors.light_color_Win);
+
+            evaluate.animate()
                     .alpha(0.0f).setDuration(500)
-                    .withEndAction(() -> traduction.setVisibility(View.INVISIBLE))
-                    .start();
-            buttonSubmit.animate()
-                    .alpha(0.0f).setDuration(500)
-                    .withEndAction(() -> traduction.setVisibility(View.INVISIBLE))
+                    .withEndAction(() -> evaluate.setVisibility(View.INVISIBLE))
                     .start();
             lettres_container.setVisibility(View.INVISIBLE);
         } else {
-            textview_reponse.setTextColor(MainActivity.couleurL);
+            textview_reponse.setTextColor(UsedColors.light_color_Loose);
+            cadre.setBackgroundColor(UsedColors.dark_color_Loose);
+            cadre.setStrokeColor(UsedColors.light_color_Loose);
         }
     }
 }

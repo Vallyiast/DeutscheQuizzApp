@@ -7,73 +7,74 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class GuessFragment extends Fragment {
 
 
-    Button main, forget_button,recall_button,boutton_mot;
-    LinearLayout cadre;
-    TextView title;
-    List<String[]> dictionnaire = new ArrayList<>();
-    List<Integer> indexList = new ArrayList<>();
-    int indexCourant;
-
-    int changement_mot;
+    Button main_menu_button, forget_button, recall_button;
+    MaterialCardView frame;
+    TextView word, nb_remaining_words;
+    List<String[]> dictionnary = new ArrayList<>();
+    List<Integer> dictionnary_index_list = new ArrayList<>();
+    int current_index;
+    int FLAG_language;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_guess, container, false);
 
-        main = view.findViewById(R.id.main_menu);
-        title = view.findViewById(R.id.title);
-        cadre = view.findViewById(R.id.cadre);
-        boutton_mot = view.findViewById(R.id.word);
+        main_menu_button = view.findViewById(R.id.main_menu);
+        frame = view.findViewById(R.id.cadre);
+        word = view.findViewById(R.id.word);
         forget_button = view.findViewById(R.id.forget);
         recall_button = view.findViewById(R.id.recall);
+        nb_remaining_words = view.findViewById(R.id.scoreText);
 
-        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
-        indexList = java.util.stream.IntStream.range(1, dictionnaire.size()).boxed().collect(java.util.stream.Collectors.toList());
-        Collections.shuffle(indexList);
-        main.setOnClickListener(v -> requireActivity().finish());
+        dictionnary = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
+        dictionnary_index_list = IntStream.range(1, dictionnary.size()).boxed().collect(Collectors.toList());
+        Collections.shuffle(dictionnary_index_list);
+        main_menu_button.setOnClickListener(v -> requireActivity().finish());
 
-        updateQuestion();
+        update_qustion();
         forget_button.setOnClickListener(v -> {
-            indexList.add(indexCourant);
-            cadre.animate().rotationBy(360f).setDuration(300).start();
-
-            updateQuestion();
+            dictionnary_index_list.add(current_index);
+            frame.animate().rotationBy(360f).setDuration(300).start();
+            update_qustion();
         });
         recall_button.setOnClickListener(v -> {
-            cadre.animate().rotationBy(-360f).setDuration(300).start();
-            updateQuestion();
+            frame.animate().rotationBy(-360f).setDuration(300).start();
+            update_qustion();
         });
 
         return view;
     }
 
-    private void updateQuestion() {
-        changement_mot = 0;
-        if (indexList.isEmpty()) {
-            title.setText("Pas d'autres mots à trouver !");
-            cadre.setVisibility(INVISIBLE);
+    private void update_qustion() {
+        nb_remaining_words.setText(String.format(Locale.getDefault(),"%d",dictionnary_index_list.size()));
+        FLAG_language = 1;
+        if (dictionnary_index_list.isEmpty()) {
+            frame.setVisibility(INVISIBLE);
         } else {
-            indexCourant = indexList.get(0);
-            indexList.remove(0);
-            boutton_mot.setText(dictionnaire.get(indexCourant)[0]);
+            current_index = dictionnary_index_list.get(0);
+            dictionnary_index_list.remove(0);
+            word.setText(dictionnary.get(current_index)[FLAG_language]);
 
-            boutton_mot.setOnClickListener(v -> {
-                changement_mot = 1 - changement_mot;
-                cadre.animate().rotationYBy(360f).setDuration(300).start();
-
-                boutton_mot.setText(dictionnaire.get(indexCourant)[changement_mot]);
+            frame.setOnClickListener(v -> {
+                FLAG_language = 1 - FLAG_language;
+                frame.animate().rotationYBy(360f).setDuration(300).start();
+                word.setText(dictionnary.get(current_index)[FLAG_language]);
             });
         }
     }

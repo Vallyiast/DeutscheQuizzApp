@@ -1,130 +1,163 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conteneur"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="24dp"
-    android:background="@drawable/background_strips_grad"
+    android:background="#222222"
     tools:context=".WriteFragment">
 
     <!-- Bouton menu (coin supérieur) -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/main_menu"
         android:text="Menu"
         style="@style/ButtonMenu"
-        android:layout_marginBottom="24dp"/>
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cadre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Carte de la question -->
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cadre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:backgroundTint="#b1894e"
-        android:padding="16dp"
-        android:elevation="6dp"
-        android:layout_marginBottom="32dp"
         android:layout_marginHorizontal="16dp"
-        android:gravity="center">
+        app:cardBackgroundColor="#1B1B1B"
+        app:cardElevation="6dp"
+        app:strokeColor="#000000"
+        app:cardCornerRadius="16dp"
 
-        <TextView
-            android:id="@+id/question"
-            android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/main_menu"
+        app:layout_constraintBottom_toTopOf="@id/translate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Question"
-            android:textColor="@android:color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:padding="8dp" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/reponse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Réponse"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:padding="12dp"
-            android:textSize="20sp"
-            android:background="@drawable/rounded"
-            android:backgroundTint="#b1894e"
-            android:layout_marginTop="12dp" />
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Question"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="8dp"
+                android:textColor="#eeeeee" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/reponse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Answer"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="30sp"
+                android:padding="12dp"
+                android:layout_marginTop="22dp"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Boutons d’action -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/buttonSubmit"
-            style="@style/ButtonCommon"
-            android:text="Envoyer"
-            android:layout_marginHorizontal="8dp"/>
-
-        <Button
-            android:id="@+id/traduction"
-            style="@style/ButtonCommon"
-            android:text="Traduction"
-            android:layout_marginHorizontal="8dp"/>
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/next_button"
-        style="@style/ButtonCommon"
-        android:text="Suivant"
-        android:layout_marginBottom="32dp"/>
-
-    <!-- Ligne de boutons lettres -->
-    <LinearLayout
-        android:id="@+id/lettres_container"
+        android:id="@+id/translate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:padding="12dp"
-        android:background="@drawable/rounded"
-        android:backgroundTint="#b1894e"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-        android:elevation="4dp">
 
-        <!-- Exemple : ces boutons peuvent être générés dynamiquement -->
-        <Button
-            android:id="@+id/lettre1"
-            style="@style/ButtonCharacter"
-            android:text="A"/>
+        app:layout_constraintTop_toBottomOf="@id/cadre"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
-        <Button
-            android:id="@+id/lettre2"
-            style="@style/ButtonCharacter"
-            android:text="B"/>
-
-        <Button
-            android:id="@+id/lettre3"
-            style="@style/ButtonCharacter"
-            android:text="C"/>
-
-        <Button
-            android:id="@+id/lettre4"
-            style="@style/ButtonCharacter"
-            android:text="D"/>
-
-        <Button
-            android:id="@+id/lettre5"
-            style="@style/ButtonCharacter"
-            android:text="E"/>
-        <Button
-            android:id="@+id/lettre6"
-            style="@style/ButtonCharacter"
-            android:text="F"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/evaluate"
+            style="@style/Button"
+            android:textSize="15sp"
+            android:backgroundTint="#1B1B1B"
+            android:text="Evaluate"/>
     </LinearLayout>
-</LinearLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/lettres_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:strokeColor="#000000"
+        app:cardBackgroundColor="#1B1B1B"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+
+        app:layout_constraintTop_toBottomOf="@id/translate"
+        app:layout_constraintBottom_toTopOf="@id/next_button"
+
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lettre1"
+                style="@style/ButtonCharacter"
+                android:text="A"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lettre2"
+                style="@style/ButtonCharacter"
+                android:text="B"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lettre3"
+                style="@style/ButtonCharacter"
+                android:text="C"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lettre4"
+                style="@style/ButtonCharacter"
+                android:text="D"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lettre5"
+                style="@style/ButtonCharacter"
+                android:text="E"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lettre6"
+                style="@style/ButtonCharacter"
+                android:text="F"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_button"
+        style="@style/ButtonNext"
+        android:text="Next"
+
+        app:layout_constraintTop_toBottomOf="@id/lettres_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

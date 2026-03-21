@@ -1,17 +1,20 @@
 package com.example.deutschquiz;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,47 +22,39 @@ import java.util.Random;
 
 public class QuizFragment extends Fragment {
     private static final Random rand = new Random();
-    LinearLayout conteneur;
-    TextView questionText, feedbackText;
-    Button next, variation, image_button, main;
-    List<Button> answersButtons = new ArrayList<>();
-    ImageView image;
+    LinearLayout button_container;
+    TextView question_textview;
+    Button next, variation, main;
+    List<MaterialButton> answers_buttons = new ArrayList<>();
     SeekBar seekBar;
 
     int questionIndex = 0;
     int nbReponses = 3;
-    int nb = 0;
-    byte varlangDetoFr = 0;
-    boolean imagemode = false;
-
-    List<String[]> dictionnaire = new ArrayList<>();
-
-
+    byte variation_lang_DetoFr = 0;
+    List<String[]> dictionnary = new ArrayList<>();
+    List<Integer> list_index_utile = new ArrayList<>();
     public ScoreDataBase scores;
-
     boolean first_FLAG;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_qcm, container, false);
 
         scores = new ScoreDataBase(requireContext(),requireActivity().getIntent().getStringExtra("destination"));
 
-        dictionnaire = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
+        dictionnary = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
+        list_index_utile = CommonUses.extractionDictionnaire(scores,dictionnary); //List des index utiles du dictionnaire
 
         main = view.findViewById(R.id.main_menu);
-        conteneur  = view.findViewById(R.id.conteneur_reponses);
-        questionText = view.findViewById(R.id.question_text);
-        feedbackText = view.findViewById(R.id.feedback_text);
+        button_container  = view.findViewById(R.id.conteneur_reponses);
+        question_textview = view.findViewById(R.id.question_text);
         next = view.findViewById(R.id.next_button);
         variation = view.findViewById(R.id.variation_button);
-        image_button = view.findViewById(R.id.image_mode_button);
-        image = view.findViewById(R.id.monImage);
-        image.setVisibility(View.GONE);
 
         seekBar = view.findViewById(R.id.seekBar);
         seekBar.setProgress(nbReponses-1);
         addButtons();
-
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -74,127 +69,86 @@ public class QuizFragment extends Fragment {
 
         main.setOnClickListener(v -> requireActivity().finish());
         variation.setOnClickListener(v -> {
-            if (varlangDetoFr==0) {
-                varlangDetoFr = 1;
+            if (variation_lang_DetoFr==0) {
+                variation_lang_DetoFr = 1;
                 variation.setText("De->Fr");
             } else {
-                varlangDetoFr = 0;
+                variation_lang_DetoFr = 0;
                 variation.setText("Fr->De");
             }
         });
-        image_button.setOnClickListener(v -> { // Image mode gestion
-            if (!imagemode) {
-                imagemode = true;
-                image_button.setText("Image mode");
-                seekBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
-                variation.setVisibility(View.INVISIBLE);
-                varlangDetoFr = 0;
-                nbReponses = 3;
-                addButtons();
-                updateQuestion();
-            } else {
-                imagemode = false;
-                image_button.setText("To image mode");
-                image.setImageResource(0);
-                seekBar.setProgress(nbReponses-1);
 
-                seekBar.setVisibility(View.VISIBLE);
-                image.setVisibility(View.GONE);
-                variation.setVisibility(View.VISIBLE);
-                updateQuestion();
-            }
-        });
 
         updateQuestion();
         next.setOnClickListener(v -> updateQuestion());
         return view;
     }
 
+    /**
+     *   Met à jour les bouttons du LinearLayout conteneur lors du changement du nombre de bouttons
+     */
     private void addButtons() {
-        /*  Met à jour les bouttons du LinearLayout conteneur lors du changement du nombre de bouttons */
-        this.answersButtons = new ArrayList<>();
-        this.conteneur.removeAllViews();
+        this.answers_buttons = new ArrayList<>();
+        this.button_container.removeAllViews();
         for (int i = 0;i<nbReponses;i++) {
-            Button button = new Button(new ContextThemeWrapper(requireContext(), R.style.ButtonCommon));
-            button.setBackgroundColor(MainActivity.couleurBR);
+            Context themedContext = new ContextThemeWrapper(
+                    requireContext(),
+                    R.style.ButtonCharacterDynamic
+            );
 
-            this.conteneur.addView(button);
-            this.answersButtons.add(button);
+            MaterialButton button = new MaterialButton(themedContext);
+            this.button_container.addView(button);
+            this.answers_buttons.add(button);
         }
     }
-    private int aleatoireExclu(int num) {
-        int res = rand.nextInt(dictionnaire.size());
-        if (res == num) {
-            return this.aleatoireExclu(num);
-        }
-        return res;
-    }
-    private void checkAnswer(boolean isTrue) {
-        if (isTrue) {
-            feedbackText.setText("✅ Bonne réponse !");
-            feedbackText.setTextColor(MainActivity.couleurW);
-        } else {
-            feedbackText.setText("❌ Mauvaise réponse.");
-            feedbackText.setTextColor(MainActivity.couleurL);
-        }
-    }
-    public static int indexSuivant(ScoreDataBase scoreDB, List<String[]> dico) {
-        double longueur = 0;
-        for (int i = 0; i<dico.size();i++) {
-            longueur += Math.pow(2,scoreDB.getScore(dico.get(i)[0]));
-        }
-        int index = 0;
-        double val = QuizFragment.rand.nextFloat()*longueur;
-        double sum = Math.pow(2,scoreDB.getScore(dico.get(0)[0]));
-        while (sum < val && index < dico.size() - 1) {
-            index++;
-            sum += Math.pow(2,scoreDB.getScore(dico.get(index)[0]));
-        }
-        return index;
-    }
+
+
+    /**
+     * Met à jour les questions lors du pasage à la question suivante
+     */
     private void updateQuestion() {
-        feedbackText.setText("?");
-        questionText.setText("");
+        question_textview.setText("");
 
+        next.setVisibility(View.INVISIBLE);
         first_FLAG = true;
-        nb++;
-        questionIndex = indexSuivant(scores, dictionnaire);
+
+        questionIndex = CommonUses.indexSuivant(scores, dictionnary, list_index_utile);
         List<String> answers = new ArrayList<>();
-        int r = rand.nextInt(nbReponses);
-        if (imagemode) {
-            image.setImageResource(getResources().getIdentifier(dictionnaire.get(questionIndex)[0].toLowerCase(), "drawable", requireContext().getPackageName()));
-        }
-        answers.add(dictionnaire.get(questionIndex)[varlangDetoFr]);
+        int correct_answer_index = rand.nextInt(nbReponses);
+
+        answers.add(dictionnary.get(questionIndex)[variation_lang_DetoFr]);
         for (int i = 1; i < nbReponses; i++) {
-            answers.add(dictionnaire.get(this.aleatoireExclu(questionIndex))[varlangDetoFr]);
+            answers.add(dictionnary.get(CommonUses.aleatoireExclu(dictionnary.size(), questionIndex))[variation_lang_DetoFr]);
         }
-        questionText.setText(nb + ":" + dictionnaire.get(questionIndex)[1 - varlangDetoFr]);
+        question_textview.setText(dictionnary.get(questionIndex)[1 - variation_lang_DetoFr]);
 
         for (int i = 0; i<nbReponses; i++) {
-            Button answer = answersButtons.get(i);
-            answer.setBackgroundColor(MainActivity.couleurBR);
-            answer.setText(answers.get((r+i)%nbReponses));
-
+            Button answer_button = answers_buttons.get(i);
+            answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
+            answer_button.setText(answers.get((correct_answer_index+i)%nbReponses));
             int finalI = i;
-            answer.setOnClickListener(v -> {
-                checkAnswer((r+ finalI)%nbReponses==0);
-                String target_answer = dictionnaire.get(questionIndex)[0];
-                if ((r+ finalI)%nbReponses==0) {
-                    if (first_FLAG) {
-                        scores.saveScore(target_answer,scores.getScore(target_answer)-1);
-                    }
-                    answer.setBackgroundColor(MainActivity.couleurW);
-                } else {
-                    if (first_FLAG) {
-                        scores.saveScore(target_answer,scores.getScore(target_answer)+1);
-                        String obtained_answer = answers.get((r+finalI)%nbReponses);
-                        scores.saveScore(obtained_answer,scores.getScore(obtained_answer)+1);
-                    }
-                    answer.setBackgroundColor(MainActivity.couleurL);
-                }
-                first_FLAG = false;
-            });
+            answer_button.setOnClickListener(v -> onAnswerClick(v, correct_answer_index, finalI,  answer_button, answers) );
         }
+    }
+
+
+    private void onAnswerClick(View v, int r, int i, Button answer_button, List<String> answers) {
+        next.setVisibility(View.VISIBLE);
+
+        String target_answer = dictionnary.get(questionIndex)[0];
+        if ((r+ i)%nbReponses==0) {
+            if (first_FLAG) {
+                scores.saveScore(target_answer,scores.getScore(target_answer)-1);
+            }
+            answer_button.setBackgroundColor(UsedColors.dark_color_Win);
+        } else {
+            if (first_FLAG) {
+                scores.saveScore(target_answer,scores.getScore(target_answer)+1);
+                String obtained_answer = answers.get((r+i)%nbReponses);
+                scores.saveScore(obtained_answer,scores.getScore(obtained_answer)+1);
+            }
+            answer_button.setBackgroundColor(UsedColors.dark_color_Loose);
+        }
+        first_FLAG = false;
     }
 }

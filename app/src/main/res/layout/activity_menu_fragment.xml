@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="#222222"
     android:layout_height="match_parent">
 
 
@@ -18,56 +18,57 @@
         android:name="com.example.deutschquiz.GuessFragment"
         tools:layout="@layout/activity_guess" />
 
-
     <LinearLayout
-        style="@style/Bandeau"
         android:layout_width="match_parent"
-        android:padding="12dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/Quiz"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="6dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="1dp"
-            android:backgroundTint="#ffd03c"
-            android:text="Quiz"
-            android:textColor="#ffffff" />
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Match"
+                android:textStyle="bold"
+                android:text="Match"
+                style="@style/ButtonBottom"/>
 
-        <Button
-            android:id="@+id/Write"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="6dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="1dp"
-            android:backgroundTint="#ffd03c"
-            android:text="Write"
-            android:textColor="#ffffff" />
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Quiz"
+                android:textStyle="bold"
+                android:text="Quiz"
+                style="@style/ButtonBottom"/>
 
-        <Button
-            android:id="@+id/Liste"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="1dp"
-            android:backgroundTint="#ffd03c"
-            android:text="List"
-            android:textColor="#ffffff" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/List"
+                android:textStyle="bold"
+                android:text="List"
+                style="@style/ButtonBottom"/>
 
-        <Button
-            android:id="@+id/Guess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="1dp"
-            android:backgroundTint="#ffd03c"
-            android:text="Guess"
-            android:textColor="#ffffff" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Write"
+                android:textStyle="bold"
+                android:text="Write"
+                style="@style/ButtonBottom"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Guess"
+                android:textStyle="bold"
+                android:text="Guess"
+                style="@style/ButtonBottom"/>
+
+        </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>

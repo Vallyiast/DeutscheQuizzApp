@@ -3,14 +3,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/background_spiral2_grad"
+    android:background="#222222"
     android:padding="16dp">
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/main_menu"
-        style="@style/ButtonMenu"
-        android:text="Menu" />
+        android:text="Menu"
+        style="@style/ButtonMenu" />
 
     <ListView
         android:id="@+id/maListe"

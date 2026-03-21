@@ -8,23 +8,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public class MenuActivity extends AppCompatActivity {
-
-    Button boutonQuiz, boutonList, boutonGuess, boutonWrite;
+    Button buttonQuiz, buttonList, buttonGuess, buttonWrite, buttonMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_fragment);
 
-        boutonGuess = findViewById(R.id.Guess);
-        boutonQuiz = findViewById(R.id.Quiz);
-        boutonList = findViewById(R.id.Liste);
-        boutonWrite = findViewById(R.id.Write);
+        buttonGuess = findViewById(R.id.Guess);
+        buttonQuiz = findViewById(R.id.Quiz);
+        buttonList = findViewById(R.id.List);
+        buttonWrite = findViewById(R.id.Write);
+        buttonMatch = findViewById(R.id.Match);
 
         // Affiche le premier fragment au lancement
         if (savedInstanceState == null) {
-
-            boutonGuess.setBackgroundColor(Color.parseColor("#3d3729"));
+            buttonGuess.setBackgroundColor(Color.parseColor("#1B1B1B"));
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragment_container_view, GuessFragment.class, null)
@@ -32,30 +31,37 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         // Gestion de la bannière
-        boutonQuiz.setOnClickListener(v ->  {
+        buttonMatch.setOnClickListener(v ->  {
+            switchToFragment(new MatchFragment());
+            v.setBackgroundColor(Color.parseColor("#1B1B1B"));
+        });
+
+        buttonQuiz.setOnClickListener(v ->  {
             switchToFragment(new QuizFragment());
-            v.setBackgroundColor(Color.parseColor("#3d3729"));
+            v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
-        boutonGuess.setOnClickListener(v -> {
+
+        buttonGuess.setOnClickListener(v -> {
             switchToFragment(new GuessFragment());
-            v.setBackgroundColor(Color.parseColor("#3d3729"));
+            v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
-        boutonList.setOnClickListener(v -> {
+        buttonList.setOnClickListener(v -> {
             switchToFragment(new ListFragment());
-                v.setBackgroundColor(Color.parseColor("#3d3729"));
+                v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
-        boutonWrite.setOnClickListener(v -> {
+        buttonWrite.setOnClickListener(v -> {
             switchToFragment(new WriteFragment());
-            v.setBackgroundColor(Color.parseColor("#3d3729"));
+            v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
     }
 
     private void switchToFragment(Fragment fragment) {
 
-        boutonGuess.setBackgroundColor(Color.parseColor("#ffd03c"));
-        boutonWrite.setBackgroundColor(Color.parseColor("#ffd03c"));
-        boutonList.setBackgroundColor(Color.parseColor("#ffd03c"));
-        boutonQuiz.setBackgroundColor(Color.parseColor("#ffd03c"));
+        buttonGuess.setBackgroundColor(Color.parseColor("#1B1B1B"));
+        buttonQuiz.setBackgroundColor(Color.parseColor("#1B1B1B"));
+        buttonList.setBackgroundColor(Color.parseColor("#1B1B1B"));
+        buttonMatch.setBackgroundColor(Color.parseColor("#1B1B1B"));
+        buttonWrite.setBackgroundColor(Color.parseColor("#1B1B1B"));
 
         getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container_view,fragment)

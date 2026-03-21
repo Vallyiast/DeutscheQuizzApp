@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:background="@drawable/background_gradient"
+    android:background="#222222"
     android:layout_height="match_parent">
 
     <ImageView
@@ -34,28 +34,30 @@
             android:gravity="center"
             android:layout_marginTop="16dp">
 
-            <Button
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/Verbes"
                 android:layout_width="140dp"
-                style="@style/ButtonCommon"
+                style="@style/Button"
                 android:text="Verbes" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/Noms"
                 android:layout_width="140dp"
-                style="@style/ButtonCommon"
+                style="@style/Button"
                 android:text="Noms" />
 
-            <Button
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/Adverbes"
                 android:layout_width="140dp"
-                style="@style/ButtonCommon"
+                style="@style/Button"
                 android:text="Adverbes" />
 
             <Button
                 android:id="@+id/Adjectifs"
                 android:layout_width="140dp"
-                style="@style/ButtonCommon"
+                style="@style/Button"
                 android:text="Adjectifs" />
 
         </LinearLayout>
@@ -68,10 +70,11 @@
             android:gravity="center"
             android:layout_marginTop="16dp">
 
-            <Button
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/Mots"
                 android:layout_width="140dp"
-                style="@style/ButtonCommon"
+                style="@style/Button"
                 android:backgroundTint="#3d3359"
                 android:text="Cours: Gluck" />
 

@@ -57,6 +57,11 @@ public class ListFragment extends Fragment {
 
 
         ArrayAdapter<String[]> adapter = new ArrayAdapter<>(requireContext(), R.layout.list_item, R.id.textLeft, data) {
+
+            private List<Boolean> states;   // état des checkbox
+
+           
+
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -69,11 +74,9 @@ public class ListFragment extends Fragment {
 
                 TextView left = convertView.findViewById(R.id.textLeft);
                 TextView center = convertView.findViewById(R.id.textCenter);
-                TextView right = convertView.findViewById(R.id.textRight);
 
                 left.setText(item[0]);
                 center.setText(item[1]);
-                right.setText(item[2]);
 
                 return convertView;
             }

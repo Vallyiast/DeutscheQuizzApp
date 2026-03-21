@@ -15,28 +15,22 @@ import java.util.Random;
 
 public class ConjugaisonActivity extends AppCompatActivity {
     private View lastSelected = null;
-    private LinesView linesView;
-
     Button menu_button;
     LinearLayout leftCol, rightCol;
-
     Random rand = new Random();
-
     private List<String[]> dictionnaire;
-
     private final String[] pronoms = {"ich","du","er,sie","wir","ihr","Sie"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conjugaison);
+        setContentView(R.layout.activity_match);
 
         menu_button = findViewById(R.id.main_menu);
         menu_button.setOnClickListener(v -> finish());
 
         leftCol = findViewById(R.id.leftColumn);
         rightCol = findViewById(R.id.rightColumn);
-        linesView = findViewById(R.id.linesView);
 
         dictionnaire = CommonUses.getThemeList(this.getAssets(), "verbes");
 
@@ -59,7 +53,6 @@ public class ConjugaisonActivity extends AppCompatActivity {
                 if (lastSelected != null) {
                     PointF start = getCenter(lastSelected);
                     PointF end = getCenter(v);
-                    linesView.addLine(start, end);
                     lastSelected = null;
                 }
             });
