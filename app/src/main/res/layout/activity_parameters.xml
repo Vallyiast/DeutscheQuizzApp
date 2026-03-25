@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Translation language"
             android:textColor="@color/white"
-            android:textSize="20dp">
+            android:textSize="20sp">
         </TextView>
 
         <LinearLayout
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:text="Numbers of answers for quiz activity"
             android:textColor="@color/white"
-            android:textSize="20dp">
+            android:textSize="20sp">
         </TextView>
 
         <SeekBar
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:text="Numbers of buttons for match activity"
             android:textColor="@color/white"
-            android:textSize="20dp">
+            android:textSize="20sp">
         </TextView>
 
         <SeekBar
