@@ -1,7 +1,6 @@
 package com.example.deutschquiz.view;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -47,11 +46,10 @@ public class GuessView extends ViewModel {
         return dictionnaryIndexList.isEmpty();
     }
 
-    public String getNextWord() {
+    public void getNextWord() {
         currentIndex = dictionnaryIndexList.remove(0);
         String germanWord = dictionnary.get(currentIndex)[0];
         loadTranslations(germanWord);
-        return germanWord;
     }
 
     public LiveData<String> getWord() {

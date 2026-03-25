@@ -15,12 +15,7 @@
         <activity
             android:name=".activity.MenuActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity.ConjugaisonActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.MenuVerbesActivity"
-            android:exported="false" />
+
 
         <activity
             android:name=".activity.MainActivity"
