@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.deutschquiz.activity.MainActivity;
+
 public class ScoreDataBase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "scores.db";
     private static final int DATABASE_VERSION = 2;
@@ -26,7 +28,7 @@ public class ScoreDataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        for (String type:MainActivity.types) {
+        for (String type: MainActivity.types) {
             try {
                 String CREATE_TABLE = "CREATE TABLE " + "score_" + type + " (" + type + " TEXT PRIMARY KEY, " + "score" + " INTEGER DEFAULT 0)";
                 db.execSQL(CREATE_TABLE);
