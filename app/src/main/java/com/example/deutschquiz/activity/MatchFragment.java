@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.deutschquiz.CommonUses;
+import com.example.deutschquiz.utils.CommonUses;
 import com.example.deutschquiz.R;
-import com.example.deutschquiz.UsedColors;
+import com.example.deutschquiz.utils.UsedColors;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;

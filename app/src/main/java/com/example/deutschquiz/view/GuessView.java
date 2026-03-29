@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.deutschquiz.CommonUses;
-import com.example.deutschquiz.dictionary.WikDictionary;
+import com.example.deutschquiz.utils.CommonUses;
+import com.example.deutschquiz.database.WikDictionary;
 
 import java.util.ArrayList;
 import java.util.Collections;

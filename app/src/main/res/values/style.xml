@@ -28,6 +28,7 @@
     <style name="ButtonCharacterDynamic" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">20dp</item>
         <item name="strokeWidth">4dp</item>
+        <item name="android:textColor">#FFFFFF</item>
         <item name="strokeColor">@android:color/black</item>
         <item name="android:backgroundTint">#1B1B1B</item>
         <item name="android:textSize">30sp</item>
@@ -74,6 +75,7 @@
     <style name="ButtonNext" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">70dp</item>
+        <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">#1B1B1B</item>   <!-- button background -->
         <item name="strokeColor">#000000</item>      <!-- border color -->

@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.deutschquiz.CommonUses;
+import com.example.deutschquiz.utils.CommonUses;
 import com.example.deutschquiz.R;
-import com.example.deutschquiz.ScoreDataBase;
-import com.example.deutschquiz.UsedColors;
+import com.example.deutschquiz.database.ScoreDataBase;
+import com.example.deutschquiz.utils.UsedColors;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class QuizFragment extends Fragment {
         scores = new ScoreDataBase(requireContext(),requireActivity().getIntent().getStringExtra("destination"));
 
         dictionnary = CommonUses.getThemeList(requireContext().getAssets(),requireActivity().getIntent().getStringExtra("destination"));
-        list_index_utile = CommonUses.extractionDictionnaire(scores,dictionnary); //List des index utiles du dictionnaire
+        list_index_utile = CommonUses.extractionDictionnaire(scores,dictionnary); //List des index utiles du dictionnary
 
         main = view.findViewById(R.id.main_menu);
         button_container  = view.findViewById(R.id.conteneur_reponses);
@@ -106,7 +106,6 @@ public class QuizFragment extends Fragment {
         }
     }
 
-
     /**
      * Met à jour les questions lors du pasage à la question suivante
      */
@@ -127,7 +126,7 @@ public class QuizFragment extends Fragment {
         question_textview.setText(dictionnary.get(questionIndex)[1 - variation_lang_DetoFr]);
 
         for (int i = 0; i<nbReponses; i++) {
-            Button answer_button = answers_buttons.get(i);
+            MaterialButton answer_button = answers_buttons.get(i);
             answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
             answer_button.setText(answers.get((correct_answer_index+i)%nbReponses));
             int finalI = i;

@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.deutschquiz.utils.CommonUses;
 import com.example.deutschquiz.R;
 import com.example.deutschquiz.view.GuessView;
 import com.google.android.material.card.MaterialCardView;
-
-import java.util.List;
 
 public class GuessFragment extends Fragment {
 
@@ -55,7 +54,7 @@ public class GuessFragment extends Fragment {
         // OBSERVE ONLY ONCE
         viewModel.getTranslations().observe(getViewLifecycleOwner(), translations -> {
             if (!isGerman) {
-                word.setText(formatTranslations(translations));
+                word.setText(CommonUses.formatTranslations(translations));
             }
         });
 
@@ -70,9 +69,7 @@ public class GuessFragment extends Fragment {
             viewModel.forgotWord();
             updateQuestion();
         });
-
         recallButton.setOnClickListener(v -> updateQuestion());
-
         frame.setOnClickListener(v -> flipCard());
 
         updateQuestion();
@@ -97,17 +94,10 @@ public class GuessFragment extends Fragment {
                 .setDuration(150)
                 .withEndAction(() -> {
                     if (isGerman) word.setText(currentGermanWord);
-                    else word.setText(formatTranslations(viewModel.getTranslations().getValue()));
+                    else word.setText(CommonUses.formatTranslations(viewModel.getTranslations().getValue()));
                 })
                 .start();
     }
 
-    private String formatTranslations(List<String> translations) {
-        if (translations == null || translations.isEmpty()) return "?";
 
-        String text = translations.get(0);
-        if (translations.size() > 1) text += ",\n" + translations.get(1);
-        if (translations.size() > 2) text += ",\n" + translations.get(2);
-        return text;
-    }
 }

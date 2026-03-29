@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -29,6 +31,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+        resources {
+            excludes += setOf()
+        }
+    }
+
+    androidResources {
+        noCompress += listOf("db", "sqlite3")
+    }
 }
 
 dependencies {
@@ -38,8 +52,6 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.deutschquiz.R;
-import com.example.deutschquiz.ScoreDataBase;
+import com.example.deutschquiz.database.ScoreDataBase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
