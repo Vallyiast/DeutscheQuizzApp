@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.deutschquiz.utils.CommonUses;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,9 +17,11 @@ import java.util.List;
 
 
 public class WikDictionary extends SQLiteOpenHelper {
-    private static final String DB_NAME = "de-en.db";
 
-    private Context context;
+    private static final String dictionaryName = "de-"+ CommonUses.translationLanguage;
+    private static final String DB_NAME = dictionaryName+".db";
+
+    private final Context context;
     private final SQLiteDatabase dbase;
 
     public WikDictionary(Context context) {
@@ -28,7 +32,7 @@ public class WikDictionary extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        executeSqlFile(db, "databases/de-en.sql");
+        executeSqlFile(db, "databases/"+dictionaryName+".sql");
     }
 
     @Override
@@ -50,23 +54,12 @@ public class WikDictionary extends SQLiteOpenHelper {
             }
             reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(this.getClass().getName(),e.getMessage());
         }
     }
-/*
-    @Override
-    public void onConfigure(SQLiteDatabase db) {
-        super.onConfigure(db);
-        // Disable WAL
-        db.disableWriteAheadLogging();
-        // Enable WAL
-        // db.enableWriteAheadLogging();
-    }
-*/
 
     public List<String> getTranslations(String word) {
 
-        Log.d(this.getClass().getName(),"Database word: " +word);
 
         String TABLE_NAME = "simple_translation";
         Cursor cursor = dbase.query(
@@ -82,8 +75,6 @@ public class WikDictionary extends SQLiteOpenHelper {
         }
         String translations = cursor.getString(0);
         cursor.close();
-
-        Log.d(this.getClass().getName(),"Database queried for "+word+" : " +translations);
 
         return parseTranslations(translations);
     }

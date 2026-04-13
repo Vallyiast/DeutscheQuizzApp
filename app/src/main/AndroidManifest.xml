@@ -13,12 +13,18 @@
         android:theme="@style/Theme.DeutschQuiz"
         tools:targetApi="31">
         <activity
-            android:name=".activity.MenuActivity"
+            android:name=".activity.SecondMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ParametersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="false" />
 
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.GeneralActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

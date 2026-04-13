@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.deutschquiz.utils.CommonUses;
+import com.example.deutschquiz.model.Word;
+import com.example.deutschquiz.WordRepository;
 import com.example.deutschquiz.database.WikDictionary;
 
 import java.util.ArrayList;
@@ -22,19 +23,18 @@ public class GuessView extends ViewModel {
     private final MutableLiveData<String> word = new MutableLiveData<>();
     private final MutableLiveData<List<String>> translations = new MutableLiveData<>();
 
-    List<String[]> dictionnary = new ArrayList<>();
+    List<Word> dictionnary = new ArrayList<>();
     List<Integer> dictionnaryIndexList = new ArrayList<>();
 
     int currentIndex;
     private final Executor executor = Executors.newSingleThreadExecutor();
     private WikDictionary repo;
 
-    public void init(Context context, String wordsFileName) {
-
+    public void init(Context context) {
         if (repo != null) return;
         repo = new WikDictionary(context);
 
-        dictionnary = CommonUses.getThemeList(context.getAssets(),wordsFileName);
+        dictionnary = WordRepository.getWordList();
         dictionnaryIndexList = IntStream.range(1, dictionnary.size()).boxed().collect(Collectors.toList());
         Collections.shuffle(dictionnaryIndexList);
     }
@@ -48,8 +48,8 @@ public class GuessView extends ViewModel {
 
     public void getNextWord() {
         currentIndex = dictionnaryIndexList.remove(0);
-        String germanWord = dictionnary.get(currentIndex)[0];
-        loadTranslations(germanWord);
+        Word germanWord = dictionnary.get(currentIndex);
+        loadTranslations(germanWord.getWordString());
     }
 
     public LiveData<String> getWord() {

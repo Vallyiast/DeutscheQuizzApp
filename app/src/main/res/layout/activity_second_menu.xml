@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#222222"
+    android:layout_height="match_parent">
+
+
+    <!-- res/layout/example_activity.xml -->
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:name="com.example.deutschquiz.activity.MenuFragment"
+        tools:layout="@layout/activity_menu_fragment" />
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Game"
+            android:textStyle="bold"
+            android:text="Game"
+            android:layout_width="160dp"
+            style="@style/Button"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.rightRounded"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/List"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/List"
+            android:textStyle="bold"
+            android:layout_width="120dp"
+            android:text="List"
+            style="@style/PrimaryButton"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/Menu"
+            app:layout_constraintStart_toEndOf="@+id/Game"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Menu"
+
+            android:textStyle="bold"
+            android:text="Menu"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            style="@style/Button"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.leftRounded"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/List"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>

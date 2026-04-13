@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:padding="6dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -33,39 +33,25 @@
                 android:id="@+id/Match"
                 android:textStyle="bold"
                 android:text="Match"
-                style="@style/ButtonBottom"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:padding="6dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                style="@style/PrimaryButton"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/Quiz"
                 android:textStyle="bold"
                 android:text="Quiz"
-                style="@style/ButtonBottom"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/List"
-                android:textStyle="bold"
-                android:text="List"
-                style="@style/ButtonBottom"/>
+                style="@style/PrimaryButton"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/Write"
                 android:textStyle="bold"
                 android:text="Write"
-                style="@style/ButtonBottom"/>
+                style="@style/PrimaryButton"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/Guess"
                 android:textStyle="bold"
                 android:text="Guess"
-                style="@style/ButtonBottom"/>
+                style="@style/PrimaryButton"/>
 
         </LinearLayout>
     </LinearLayout>

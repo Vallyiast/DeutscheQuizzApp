@@ -8,11 +8,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/scoreBadge"
-        android:layout_width="148dp"
-        android:layout_height="148dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_margin="10dp"
+        style="@style/Button"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.bottomLeftRounded"
         app:cardBackgroundColor="#1B1B1B"
-        app:cardCornerRadius="124dp"
         app:cardElevation="4dp"
         app:strokeColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +23,7 @@
             android:id="@+id/scoreText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="30dp"
+            android:padding="8dp"
             android:gravity="bottom"
             android:text="5"
             android:textColor="#ffffff"
@@ -66,10 +67,8 @@
 
             <TextView
                 android:id="@+id/word"
-                style="@style/ButtonCommon"
-                android:padding="20dp"
+                style="@style/BigText"
                 android:text="bigword"
-                android:textSize="30dp"
 
                 app:layout_constraintBottom_toTopOf="@id/buttonBar"
                 app:layout_constraintEnd_toEndOf="parent"

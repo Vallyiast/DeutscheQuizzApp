@@ -1,20 +1,20 @@
 package com.example.deutschquiz.utils;
 
 
-import android.content.res.AssetManager;
-import android.util.Log;
-
 import com.example.deutschquiz.database.ScoreDataBase;
+import com.example.deutschquiz.model.Word;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class CommonUses {
+
+    public static String translationLanguage = "en";
+    public static int nbButtonsMatchActivity = 7;
+    public static int nbButtonsQuizActivity = 5;
+    public static String currentLanguageTranslation;
+
     public static String formatTranslations(List<String> translations) {
         if (translations == null || translations.isEmpty()) return "?";
 
@@ -24,34 +24,16 @@ public class CommonUses {
         return text;
     }
 
-    public static List<String[]> getThemeList(AssetManager assetManager, String theme) {
-        List<String[]> dictionnaire = new ArrayList<>();
-        try {
-            InputStream is = assetManager.open(theme + ".txt");
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                dictionnaire.add(ligne.split(";",-1));
-            }
-            reader.close();
-        } catch (IOException e) {
-            Log.d("CommonUses",theme+" list not found");
-        }
-        return dictionnaire;
-    }
-
-
     /**
      * Extrait de la base de données les indexes utiles du dictionnaire
      * @param db databases
      * @return dictionnaire d'index utile
      */
-    public static List<Integer> extractionDictionnaire(ScoreDataBase db, List<String[]> dictionnaire) {
-        List<Integer> dictionnaire_utile = new ArrayList<>();
-        for (int i = 0; i<dictionnaire.size();i++) {
-            if (db.getScore(dictionnaire.get(i)[0])>-10) {
-                dictionnaire_utile.add(i);
+    public static List<Word> extractionDictionnaire(ScoreDataBase db, List<Word> dictionnaire) {
+        List<Word> dictionnaire_utile = new ArrayList<>();
+        for (Word word: dictionnaire) {
+            if (db.getScore(word.getWordString())>-10) {
+                dictionnaire_utile.add(word);
             }
         }
         return dictionnaire_utile;
@@ -64,34 +46,20 @@ public class CommonUses {
      * @param dico dictionnaire des mots
      * @return index du mot dans le dictionnaire
      */
-    public static int indexSuivant(ScoreDataBase scoreDB, List<String[]> dico, List<Integer> list_index) {
+    public static Word indexSuivant(ScoreDataBase scoreDB, List<Word> dico) {
         Random rand = new Random();
         double longueur = 0;
-        for (int i = 0; i<list_index.size();i++) {
-            longueur += Math.pow(2,scoreDB.getScore(dico.get(list_index.get(i))[0]));
+        for (Word word : dico) {
+            longueur += Math.pow(2,scoreDB.getScore(word.getWordString()));
         }
         int index = 0;
         double val = rand.nextFloat()*longueur;
-        double sum = Math.pow(2,scoreDB.getScore(dico.get(list_index.get(0))[0]));
+        double sum = Math.pow(2,scoreDB.getScore(dico.get(index).getWordString()));
         while (sum < val && index < dico.size() - 1) {
             index++;
-            sum += Math.pow(2,scoreDB.getScore(dico.get(list_index.get(index))[0]));
+            sum += Math.pow(2,scoreDB.getScore(dico.get(index).getWordString()));
         }
-        return list_index.get(index);
+        return dico.get(index);
     }
 
-    /**
-     * Renvoie un nombre aléatoire dans [0,interval]\{num}
-     * @param interval borne superieur de l'intervalle
-     * @param num nombre à exclure
-     * @return nombre aléatoire
-     */
-    public static int aleatoireExclu(int interval, int num) {
-        Random rand = new Random();
-        int res = rand.nextInt(interval-1);
-        if (res >= num) {
-            return res+1;
-        }
-        return res;
-    }
 }

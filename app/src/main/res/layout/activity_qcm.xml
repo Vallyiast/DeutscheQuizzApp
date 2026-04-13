@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/conteneur"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,23 +23,13 @@
         android:layout_width="150dp"
         style="@style/Button"
         android:textSize="20sp"
-        android:text="Fr->De"
+        android:text="->De"
         app:layout_constraintTop_toBottomOf="@id/main_menu"
-        app:layout_constraintBottom_toBottomOf="@id/seekBar"
+        app:layout_constraintBottom_toBottomOf="@id/question_text"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="8"
-        app:layout_constraintTop_toTopOf="@id/variation_button"
-
-        app:layout_constraintBottom_toTopOf="@id/question_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/question_text"
@@ -50,7 +39,7 @@
         android:color="@color/white"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        app:layout_constraintTop_toBottomOf="@id/variation_button"
         app:layout_constraintBottom_toTopOf="@id/conteneur_reponses"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

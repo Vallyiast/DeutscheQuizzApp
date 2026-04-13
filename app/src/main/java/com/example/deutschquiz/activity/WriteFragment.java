@@ -27,7 +27,7 @@ import java.util.Random;
 public class WriteFragment extends Fragment {
 
     private WriteView viewModel;
-    Random rand = new Random();
+    final Random rand = new Random();
     static final List<Character> vowels = Arrays.asList('a', 'e', 'i', 'o', 'u', 'ä', 'ü', 'ï', 'ö', 'ë');
     static final List<Character> consonants = Arrays.asList('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z','ß');
     int indexCharactereReponse = 0;
@@ -37,7 +37,7 @@ public class WriteFragment extends Fragment {
     Button next, main, evaluate;
     MaterialCardView lettersContainer, cadre;
 
-    List<Button> characterButtons = new ArrayList<>();
+    final List<Button> characterButtons = new ArrayList<>();
 
     String currentGermanWord;
 
@@ -47,7 +47,7 @@ public class WriteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(WriteView.class);
-        viewModel.init(requireContext(), requireActivity().getIntent().getStringExtra("destination"));
+        viewModel.init(requireContext());
     }
 
     @Override
@@ -76,9 +76,7 @@ public class WriteFragment extends Fragment {
         main.setOnClickListener(v -> requireActivity().finish());
 
 
-        viewModel.getTranslations().observe(getViewLifecycleOwner(), translations -> {
-            textviewQuestion.setText(CommonUses.formatTranslations(translations));
-        });
+        viewModel.getTranslations().observe(getViewLifecycleOwner(), translations -> textviewQuestion.setText(CommonUses.formatTranslations(translations)));
 
         viewModel.getWord().observe(getViewLifecycleOwner(), germanWord -> {
             currentGermanWord = germanWord.toLowerCase();
@@ -128,10 +126,6 @@ public class WriteFragment extends Fragment {
         cadre.setStrokeColor(UsedColors.border_color);
 
         indexCharactereReponse = 0;
-
-
-
-
     }
 
     /**

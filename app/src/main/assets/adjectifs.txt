@@ -1,7 +1,7 @@
 ganz;entier
 neu;nouveau
 anders;autre
-gross;grand,gros
+groß;grand,gros
 erste;premier
 viel;nombreux
 gut;bon
@@ -13,16 +13,15 @@ hoch;haut,élevé
 letzte;dernier
 eigen;propre
 schon;beau,bon
-spat;tardif
+spät;tardif
 wichtig;important
-weitere;supplémentaire
 genau;exact,précis
 allein;seul
 arm;pauvre
 einfach;simple, facile
 freundlich;amical
 gleich;similaire
-glucklich;heureux
+glücklich;heureux
 krank;malade
 langweilig;ennuyeux
 lustig;drole
