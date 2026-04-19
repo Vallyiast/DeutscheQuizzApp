@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.games;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -122,7 +122,7 @@ public class WriteFragment extends Fragment {
         textviewReponse.setText("");
         textviewReponse.setTextColor(Color.WHITE);
 
-        cadre.setBackgroundColor(UsedColors.background_color);
+        cadre.setCardBackgroundColor(UsedColors.background_color);
         cadre.setStrokeColor(UsedColors.border_color);
 
         indexCharactereReponse = 0;
@@ -175,7 +175,7 @@ public class WriteFragment extends Fragment {
     private void checkAnswer(boolean isTrue) {
         if (isTrue) {
             textviewReponse.setTextColor(UsedColors.light_color_Win);
-            cadre.setBackgroundColor(UsedColors.dark_color_Win);
+            cadre.setCardBackgroundColor(UsedColors.dark_color_Win);
             cadre.setStrokeColor(UsedColors.light_color_Win);
 
             evaluate.animate() 
@@ -185,7 +185,7 @@ public class WriteFragment extends Fragment {
             lettersContainer.setVisibility(View.INVISIBLE);
         } else {
             textviewReponse.setTextColor(UsedColors.light_color_Loose);
-            cadre.setBackgroundColor(UsedColors.dark_color_Loose);
+            cadre.setCardBackgroundColor(UsedColors.dark_color_Loose);
             cadre.setStrokeColor(UsedColors.light_color_Loose);
         }
     }

@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.navigation;
 
 import android.os.Bundle;
 import android.widget.Button;

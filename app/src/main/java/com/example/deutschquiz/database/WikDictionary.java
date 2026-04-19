@@ -59,8 +59,6 @@ public class WikDictionary extends SQLiteOpenHelper {
     }
 
     public List<String> getTranslations(String word) {
-
-
         String TABLE_NAME = "simple_translation";
         Cursor cursor = dbase.query(
                 TABLE_NAME,
@@ -71,6 +69,7 @@ public class WikDictionary extends SQLiteOpenHelper {
         );
 
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return Collections.emptyList();
         }
         String translations = cursor.getString(0);
@@ -89,7 +88,6 @@ public class WikDictionary extends SQLiteOpenHelper {
                 result.add(clean);
             }
         }
-
         return result;
     }
 

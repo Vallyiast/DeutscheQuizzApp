@@ -55,7 +55,11 @@ public class WriteView extends ViewModel {
         executor.execute(() -> {
             word.postValue(germanWord);
             List<String> result = repo.getTranslations(germanWord);
-            translations.postValue(result);
+            if (result.isEmpty()) {
+                getNextWord();
+            } else {
+                translations.postValue(result);
+            }
         });
     }
 

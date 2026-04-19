@@ -61,8 +61,12 @@ public class GuessView extends ViewModel {
     public void loadTranslations(String germanWord) {
         executor.execute(() -> {
             List<String> result = repo.getTranslations(germanWord);
-            translations.postValue(result);
-            word.postValue(germanWord);
+            if (result.isEmpty()) {
+                getNextWord();
+            } else {
+                translations.postValue(result);
+                word.postValue(germanWord);
+            }
         });
     }
 

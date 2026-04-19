@@ -76,23 +76,28 @@ public class QuizView extends ViewModel {
             List<String> randomWordsList = getRandomWordsExcept(germanWord, nbResponses-1);
             List<String> answerList = new ArrayList<>();
             List<String> result = repo.getTranslations(germanWord.getWordString());
-            if (answerToGerman) {
-                question.postValue(CommonUses.formatTranslations(result));
-                response = germanWord.getWordString();
-
-                answerList.add(germanWord.getWordString());
-                answerList.addAll(randomWordsList);
+            if (result.isEmpty()) {
+                nextWord();
             } else {
-                question.postValue(germanWord.getWordString());
-                response = result.get(0);
+                if (answerToGerman) {
+                    question.postValue(CommonUses.formatTranslations(result));
+                    response = germanWord.getWordString();
 
-                answerList.add(result.get(0));
-                for (String word: randomWordsList) {
-                    List<String> translation = repo.getTranslations(word);
-                    answerList.add(translation.get(0));
+                    answerList.add(germanWord.getWordString());
+                    answerList.addAll(randomWordsList);
+                } else {
+                    question.postValue(germanWord.getWordString());
+                    response = result.get(0);
+
+                    answerList.add(result.get(0));
+                    for (String word : randomWordsList) {
+                        List<String> translation = repo.getTranslations(word);
+                        if (!translation.isEmpty()) answerList.add(translation.get(0));
+                    }
                 }
+                Collections.shuffle(answerList);
+                answers.postValue(answerList);
             }
-            answers.postValue(answerList);
         });
     }
 

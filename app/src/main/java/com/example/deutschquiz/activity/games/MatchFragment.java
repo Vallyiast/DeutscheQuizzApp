@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.games;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -58,23 +58,20 @@ public class MatchFragment extends Fragment {
         addButtonsToLayout();
 
         viewModel.getQuestionList().observe(getViewLifecycleOwner(), questionList -> {
-            for (int i = 0; i< viewModel.getNbResponses(); i++) {
+            for (int i = 0; i< questionList.size(); i++) {
                 MaterialButton question_button = questionsButtons.get(i);
+                question_button.setVisibility(View.VISIBLE);
                 question_button.setBackgroundColor(Color.rgb(27, 27, 27));
                 question_button.setText(questionList.get(i));
             }
         });
 
         viewModel.getAnswerList().observe(getViewLifecycleOwner(), answerList -> {
-            for (int i = 0; i< viewModel.getNbResponses(); i++) {
+            for (int i = 0; i< answerList.size(); i++) {
                 MaterialButton answer_button = answersButtons.get(i);
-                if (answerList.size()>i) {
-                    answer_button.setVisibility(View.VISIBLE);
-                    answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
-                    answer_button.setText(answerList.get(i));
-                } else {
-                    answer_button.setVisibility(View.INVISIBLE);
-                }
+                answer_button.setVisibility(View.VISIBLE);
+                answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
+                answer_button.setText(answerList.get(i));
             }
         });
 
@@ -146,6 +143,7 @@ public class MatchFragment extends Fragment {
 
     private void resetButtonLayout(MaterialButton button) {
         button.setClickable(true);
+        button.setVisibility(View.INVISIBLE);
         button.setTextColor(UsedColors.text_color);
         button.setStrokeColor(ColorStateList.valueOf(UsedColors.border_color));
     }

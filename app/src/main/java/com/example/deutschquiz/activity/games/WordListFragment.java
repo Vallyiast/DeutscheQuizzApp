@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.games;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -61,7 +61,7 @@ public class WordListFragment extends Fragment {
                 TextView center = convertView.findViewById(R.id.textCenter);
 
                 Word word = data.get(position);
-                left.setText(word.getWordString());
+                left.setText(word.getPrettyWordString());
                 List<String> translations = word.getTranslation();
 
                 if ((!translations.isEmpty())) {

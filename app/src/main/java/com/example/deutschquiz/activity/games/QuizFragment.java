@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.games;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -63,10 +63,11 @@ public class QuizFragment extends Fragment {
         });
 
         viewModel.getAnswerList().observe(getViewLifecycleOwner(), answerList -> {
-            for (int i = 0; i< viewModel.getNbResponses(); i++) {
+            for (int i = 0; i< answerList.size(); i++) {
                 MaterialButton answer_button = answersButtons.get(i);
                 answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
                 answer_button.setText(answerList.get(i));
+                answer_button.setTextColor(Color.parseColor("#FFFFFF"));
                 answer_button.setOnClickListener(v -> onAnswerClick(answer_button));
             }
         });
@@ -103,7 +104,6 @@ public class QuizFragment extends Fragment {
         viewModel.nextWord();
         next.setVisibility(View.INVISIBLE);
     }
-
 
     private void onAnswerClick(MaterialButton answerButton) {
         next.setVisibility(View.VISIBLE);

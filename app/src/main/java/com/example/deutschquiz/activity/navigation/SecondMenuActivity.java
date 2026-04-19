@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.navigation;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,10 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.deutschquiz.R;
+import com.example.deutschquiz.activity.games.WordListFragment;
+import com.example.deutschquiz.activity.games.MatchFragment;
 
 public class SecondMenuActivity  extends AppCompatActivity {
 
     Button buttonGame, buttonList, buttonMenu;
+    private Fragment activeFragment;
+    private final MenuFragment menuFragment = new MenuFragment();
+    private final MatchFragment matchFragment = new MatchFragment();
+    private final WordListFragment wordListFragment = new WordListFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,23 +28,26 @@ public class SecondMenuActivity  extends AppCompatActivity {
         buttonList = findViewById(R.id.List);
         buttonMenu = findViewById(R.id.Menu);
 
-        // Affiche le premier fragment au lancement
+
         if (savedInstanceState == null) {
+            activeFragment = menuFragment;
+
             getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, MenuFragment.class, null)
+                    .add(R.id.fragment_container_view, menuFragment, "MENU")
+                    .add(R.id.fragment_container_view, matchFragment, "MATCH").hide(matchFragment)
+                    .add(R.id.fragment_container_view, wordListFragment, "LIST").hide(wordListFragment)
                     .commit();
         }
 
 
         buttonList.setOnClickListener(v -> {
             resetButtonColor();
-            switchToFragment(new WordListFragment());
+            switchToFragment(wordListFragment);
             v.setBackgroundColor(Color.parseColor("#3B3B3B"));
         });
         buttonGame.setOnClickListener(v -> {
             resetButtonColor();
-            switchToFragment(new MatchFragment());
+            switchToFragment(matchFragment);
             v.setBackgroundColor(Color.parseColor("#3B3B3B"));
         });
 
@@ -52,19 +61,20 @@ public class SecondMenuActivity  extends AppCompatActivity {
     }
 
     private void switchToFragment(Fragment fragment) {
-        Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
 
-        if (current != null && current.getClass() == fragment.getClass()) {
+        if (fragment == activeFragment) {
             resetButtonColor();
             getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
-                    .replace(R.id.fragment_container_view,new MenuFragment())
-                    .addToBackStack(null)
+                    .hide(activeFragment)
+                    .show(menuFragment)
                     .commit();
+            activeFragment = menuFragment;
         } else {
             getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
-                    .replace(R.id.fragment_container_view,fragment)
-                    .addToBackStack(null)
+                    .hide(activeFragment)
+                    .show(fragment)
                     .commit();
+            activeFragment = fragment;
         }
     }
 }

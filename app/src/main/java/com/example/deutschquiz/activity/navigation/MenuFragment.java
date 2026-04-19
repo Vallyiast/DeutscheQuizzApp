@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.navigation;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,47 +10,58 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import com.example.deutschquiz.R;
+import com.example.deutschquiz.activity.games.QuizFragment;
+import com.example.deutschquiz.activity.games.WriteFragment;
+import com.example.deutschquiz.activity.games.GuessFragment;
+import com.example.deutschquiz.activity.games.MatchFragment;
 
 public class MenuFragment extends Fragment {
     Button buttonQuiz, buttonGuess, buttonWrite, buttonMatch;
+    private Fragment activeFragment;
+    private final MatchFragment matchFragment = new MatchFragment();
+    private final QuizFragment quizFragment = new QuizFragment();
+    private final GuessFragment guessFragment = new GuessFragment();
+    private final WriteFragment writeFragment = new WriteFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_menu_fragment, container, false);
-
 
         buttonGuess = view.findViewById(R.id.Guess);
         buttonQuiz = view.findViewById(R.id.Quiz);
         buttonWrite = view.findViewById(R.id.Write);
         buttonMatch = view.findViewById(R.id.Match);
 
-        // Affiche le premier fragment au lancement
+
         if (savedInstanceState == null) {
+            activeFragment = guessFragment;
             buttonGuess.setBackgroundColor(Color.parseColor("#1B1B1B"));
             getChildFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, GuessFragment.class, null)
+                    .add(R.id.fragment_container_view, writeFragment, "WRITE").hide(writeFragment)
+                    .add(R.id.fragment_container_view, matchFragment, "MATCH").hide(matchFragment)
+                    .add(R.id.fragment_container_view, guessFragment, "GUESS")
+                    .add(R.id.fragment_container_view, quizFragment, "QUIZ").hide(quizFragment)
                     .commit();
         }
 
-        // Gestion de la bannière
+
         buttonMatch.setOnClickListener(v ->  {
-            switchToFragment(new MatchFragment());
+            switchToFragment(matchFragment);
             v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
 
         buttonQuiz.setOnClickListener(v ->  {
-            switchToFragment(new QuizFragment());
+            switchToFragment(quizFragment);
             v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
 
         buttonGuess.setOnClickListener(v -> {
-            switchToFragment(new GuessFragment());
+            switchToFragment(guessFragment);
             v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
 
         buttonWrite.setOnClickListener(v -> {
-            switchToFragment(new WriteFragment());
+            switchToFragment(writeFragment);
             v.setBackgroundColor(Color.parseColor("#1B1B1B"));
         });
         return view;
@@ -64,8 +75,9 @@ public class MenuFragment extends Fragment {
         buttonWrite.setBackgroundColor(Color.parseColor("#1B1B1B"));
 
         getChildFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
-                .replace(R.id.fragment_container_view,fragment)
-                .addToBackStack(null)
+                .hide(activeFragment)
+                .show(fragment)
                 .commit();
+        activeFragment = fragment;
     }
 }

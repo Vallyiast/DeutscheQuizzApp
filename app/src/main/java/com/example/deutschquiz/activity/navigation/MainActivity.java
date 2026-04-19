@@ -1,4 +1,4 @@
-package com.example.deutschquiz.activity;
+package com.example.deutschquiz.activity.navigation;
 
 import android.content.Intent;
 import android.os.Bundle;

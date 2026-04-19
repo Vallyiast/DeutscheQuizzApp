@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.deutschquiz.database.WikDictionary;
 import com.example.deutschquiz.model.Word;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -28,11 +29,18 @@ public class WordListView extends ViewModel {
     }
     public void loadTranslations(List<Word> germanWords) {
         executor.execute(() -> {
+            List<Word> toRemove = new ArrayList<>();
             for (Word word : germanWords) {
                 List<String> result = repo.getTranslations(word.getWordString());
-                word.addTranslations(result);
-                words.postValue(germanWords);
+                if (!result.isEmpty()) {
+                    word.addTranslations(result);
+                    words.postValue(germanWords);
+                } else {
+                    toRemove.add(word);
+                }
             }
+            germanWords.removeAll(toRemove);
+            words.postValue(germanWords);
         });
     }
 

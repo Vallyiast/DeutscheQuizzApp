@@ -1,5 +1,7 @@
 package com.example.deutschquiz.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,11 @@ public abstract class Word {
     public String getWordString() {
         return word;
     }
+
+    public String getPrettyWordString() {
+        return word;
+    }
+
     public List<String> getTranslation() {
         return translation;
     }
@@ -23,6 +30,9 @@ public abstract class Word {
     public void addTranslations(List<String> translations) {
         this.translation.addAll(translations);
     }
+
+
+
 
     @Override
     public boolean equals(Object o) {

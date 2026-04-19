@@ -12,7 +12,18 @@ public class Noun extends Word {
         return gender;
     }
 
+    @Override
+    public String getPrettyWordString() {
+        if (gender.equals(Gender.FEMININ)) {
+            return "die "+super.getPrettyWordString();
+        } else if (gender.equals(Gender.NEUTRAL)) {
+            return "das "+super.getPrettyWordString();
+        } else {
+            return "der "+super.getPrettyWordString();
+        }
+    }
+
     public String getPlural() {
-        return plural;
+        return "die "+super.getWordString()+plural.split("-")[1];
     }
 }

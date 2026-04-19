@@ -57,22 +57,27 @@ public class MatchView extends ViewModel {
     }
     public void loadTranslations(List<String> questions) {
         executor.execute(() -> {
+            List<String> toRemove = new ArrayList<>();
             List<String> answers = new ArrayList<>();
-            questionsData.postValue(questions);
             for (String word: questions) {
                 List<String> translation = repo.getTranslations(word);
                 if (!translation.isEmpty()) {
                     answers.add(translation.get(0));
                     wordMap.put(word, translation.get(0));
+                } else {
+                    toRemove.add(word);
                 }
             }
+            questions.removeAll(toRemove);
             Collections.shuffle(answers);
             answersData.postValue(answers);
+            questionsData.postValue(questions);
         });
     }
 
     public boolean isTranslationRight(CharSequence germanWord, CharSequence translatedWord) {
-        return Objects.requireNonNull(wordMap.get((String) germanWord)).equalsIgnoreCase((String) translatedWord);
+        if (wordMap.containsKey(germanWord)) return wordMap.get((String) germanWord).equalsIgnoreCase((String) translatedWord);
+        else return false;
     }
 
     public int getNbResponses() {
