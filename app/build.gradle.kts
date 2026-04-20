@@ -62,17 +62,9 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.core.ktx)
+    implementation(libs.google.material)
 
-    // ✅ Compose BOM (controls all versions)
-    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
 
-    // ✅ Compose libs WITHOUT versions
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.activity:activity-compose")
-
-    debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

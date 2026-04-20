@@ -13,7 +13,8 @@ public class CommonUses {
     public static String translationLanguage = "en";
     public static int nbButtonsMatchActivity = 7;
     public static int nbButtonsQuizActivity = 5;
-    public static String currentLanguageTranslation;
+    public static boolean includeTransparentWords;
+
 
     public static String formatTranslations(List<String> translations) {
         if (translations == null || translations.isEmpty()) return "?";

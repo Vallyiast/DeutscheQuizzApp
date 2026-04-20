@@ -1,8 +1,10 @@
 package com.example.deutschquiz.activity.navigation;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,6 +16,7 @@ import com.example.deutschquiz.activity.games.MatchFragment;
 public class SecondMenuActivity  extends AppCompatActivity {
 
     Button buttonGame, buttonList, buttonMenu;
+    ImageButton buttonParameters;
     private Fragment activeFragment;
     private final MenuFragment menuFragment = new MenuFragment();
     private final MatchFragment matchFragment = new MatchFragment();
@@ -27,7 +30,7 @@ public class SecondMenuActivity  extends AppCompatActivity {
         buttonGame = findViewById(R.id.Game);
         buttonList = findViewById(R.id.List);
         buttonMenu = findViewById(R.id.Menu);
-
+        buttonParameters = findViewById(R.id.cog);
 
         if (savedInstanceState == null) {
             activeFragment = menuFragment;
@@ -51,7 +54,16 @@ public class SecondMenuActivity  extends AppCompatActivity {
             v.setBackgroundColor(Color.parseColor("#3B3B3B"));
         });
 
-        buttonMenu.setOnClickListener(v -> finish());
+        buttonParameters.setOnClickListener(v -> {
+            Intent intent = new Intent(SecondMenuActivity.this, ParametersActivity.class);
+            startActivity(intent);
+        });
+
+        buttonMenu.setOnClickListener(v -> {
+            resetButtonColor();
+            switchToFragment(menuFragment);
+            v.setBackgroundColor(Color.parseColor("#3B3B3B"));
+        });
     }
 
     private void resetButtonColor() {
@@ -61,15 +73,7 @@ public class SecondMenuActivity  extends AppCompatActivity {
     }
 
     private void switchToFragment(Fragment fragment) {
-
-        if (fragment == activeFragment) {
-            resetButtonColor();
-            getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
-                    .hide(activeFragment)
-                    .show(menuFragment)
-                    .commit();
-            activeFragment = menuFragment;
-        } else {
+        if (!(fragment == activeFragment)) {
             getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                     .hide(activeFragment)
                     .show(fragment)

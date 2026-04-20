@@ -1,7 +1,5 @@
 package com.example.deutschquiz.model;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
