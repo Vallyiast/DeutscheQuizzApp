@@ -37,7 +37,7 @@ public class MatchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(MatchView.class);
-        viewModel.init(requireContext());
+        viewModel.init();
     }
 
     @Override

@@ -32,7 +32,7 @@ public class GuessFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(GuessView.class);
-        viewModel.init(requireContext());
+        viewModel.init();
     }
 
     @Override

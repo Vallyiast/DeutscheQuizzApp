@@ -13,6 +13,7 @@ public class CommonUses {
     public static String translationLanguage = "en";
     public static int nbButtonsMatchActivity = 7;
     public static int nbButtonsQuizActivity = 5;
+    public static int nbButtonsWritingActivity = 6;
     public static boolean includeTransparentWords;
 
 

@@ -9,15 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.deutschquiz.R;
 import com.example.deutschquiz.WordRepository;
+import com.example.deutschquiz.database.WikDictionary;
 import com.example.deutschquiz.model.Adjective;
 import com.example.deutschquiz.model.Adverb;
 import com.example.deutschquiz.model.Verb;
 import com.example.deutschquiz.providers.CSVProvider;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String[] types = {"verbes","noms","adverbes","adjectifs","cours_gluck"};
-
 
     Button button_verbes, button_adjectifs, button_adverbes, button_mots, parameters_button;
     ImageView image;
@@ -37,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         image.setImageResource(R.drawable.declinaisons);
 
 
+        WikDictionary repo = new WikDictionary(this);
+
         parameters_button.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ParametersActivity.class);
             startActivity(intent);
@@ -44,22 +44,22 @@ public class MainActivity extends AppCompatActivity {
 
         button_verbes.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "verbes", Verb.class));
+            WordRepository.setWordList(new CSVProvider(getAssets(), "verbes", Verb.class), repo);
             startActivity(intent);
         });
         button_adjectifs.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "adjectifs", Adjective.class));
+            WordRepository.setWordList(new CSVProvider(getAssets(), "adjectifs", Adjective.class), repo);
             startActivity(intent);
         });
         button_adverbes.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "adverbes", Adverb.class));
+            WordRepository.setWordList(new CSVProvider(getAssets(), "adverbes", Adverb.class), repo);
             startActivity(intent);
         });
         button_mots.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "cours_gluck", null));
+            WordRepository.setWordList(new CSVProvider(getAssets(), "cours_gluck", null), repo);
             startActivity(intent);
         });
     }

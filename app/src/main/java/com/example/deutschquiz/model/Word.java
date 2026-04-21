@@ -29,8 +29,12 @@ public abstract class Word {
         this.translation.addAll(translations);
     }
 
-
-
+    public boolean translationIsTransparent() {
+        for (String str:translation) {
+            if (word.equalsIgnoreCase(str)) return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean equals(Object o) {

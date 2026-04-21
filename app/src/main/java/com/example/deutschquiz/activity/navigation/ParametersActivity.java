@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.deutschquiz.R;
 import com.example.deutschquiz.utils.CommonUses;
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 public class ParametersActivity extends AppCompatActivity {
 
-
     Button mainMenuButton, fr, en;
-    SeekBar matchSeekBar, quizSeekBar;
-
+    SeekBar matchSeekBar, quizSeekBar, writeSeekBar;
+    MaterialSwitch materialSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,13 @@ public class ParametersActivity extends AppCompatActivity {
 
         quizSeekBar = findViewById(R.id.seekBarQuiz);
         quizSeekBar.setProgress(CommonUses.nbButtonsQuizActivity);
+
+
+        writeSeekBar = findViewById(R.id.seekBarLetters);
+        writeSeekBar.setProgress(CommonUses.nbButtonsWritingActivity);
+
+        materialSwitch = findViewById(R.id.switch1);
+        materialSwitch.setActivated(CommonUses.includeTransparentWords);
 
         quizSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -51,14 +58,22 @@ public class ParametersActivity extends AppCompatActivity {
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+        writeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                CommonUses.nbButtonsWritingActivity = progress;
+            }
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        materialSwitch.setOnClickListener(v -> CommonUses.includeTransparentWords = !CommonUses.includeTransparentWords);
+
         en.setOnClickListener(v -> CommonUses.translationLanguage = "en");
 
         fr.setOnClickListener(v -> CommonUses.translationLanguage = "fr");
 
-
         mainMenuButton.setOnClickListener(v -> finish());
     }
-
-
-
 }

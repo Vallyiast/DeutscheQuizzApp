@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.deutschquiz.R;
+import com.example.deutschquiz.activity.games.GuessFragment;
 import com.example.deutschquiz.activity.games.WordListFragment;
-import com.example.deutschquiz.activity.games.MatchFragment;
 
 public class SecondMenuActivity  extends AppCompatActivity {
 
@@ -19,7 +19,7 @@ public class SecondMenuActivity  extends AppCompatActivity {
     ImageButton buttonParameters;
     private Fragment activeFragment;
     private final MenuFragment menuFragment = new MenuFragment();
-    private final MatchFragment matchFragment = new MatchFragment();
+    private final GuessFragment guessFragment = new GuessFragment();
     private final WordListFragment wordListFragment = new WordListFragment();
 
     @Override
@@ -37,7 +37,7 @@ public class SecondMenuActivity  extends AppCompatActivity {
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container_view, menuFragment, "MENU")
-                    .add(R.id.fragment_container_view, matchFragment, "MATCH").hide(matchFragment)
+                    .add(R.id.fragment_container_view, guessFragment, "GUESS").hide(guessFragment)
                     .add(R.id.fragment_container_view, wordListFragment, "LIST").hide(wordListFragment)
                     .commit();
         }
@@ -50,7 +50,7 @@ public class SecondMenuActivity  extends AppCompatActivity {
         });
         buttonGame.setOnClickListener(v -> {
             resetButtonColor();
-            switchToFragment(matchFragment);
+            switchToFragment(guessFragment);
             v.setBackgroundColor(Color.parseColor("#3B3B3B"));
         });
 

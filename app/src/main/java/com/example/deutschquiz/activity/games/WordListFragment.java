@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.deutschquiz.R;
-import com.example.deutschquiz.WordRepository;
 import com.example.deutschquiz.model.Word;
 import com.example.deutschquiz.view.WordListView;
 
@@ -29,7 +28,6 @@ public class WordListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(WordListView.class);
-        viewModel.init(requireContext());
     }
 
     @Override
@@ -44,8 +42,8 @@ public class WordListFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.maListe);
         // Données à afficher
-        List<Word> data = WordRepository.getWordList();
-        viewModel.loadTranslations(data);
+
+        List<Word> data = viewModel.getTranslations();
 
         ArrayAdapter<Word> adapter = new ArrayAdapter<>(requireContext(), R.layout.list_item, R.id.textLeft, data) {
 
@@ -74,10 +72,6 @@ public class WordListFragment extends Fragment {
             }
         };
 
-        viewModel.getTranslations().observe(getViewLifecycleOwner(), words -> {
-            // update your data list
-            adapter.notifyDataSetChanged();
-        });
 
         listView.setAdapter(adapter);
     }
