@@ -2,6 +2,7 @@ package com.example.deutschquiz.activity.navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -14,11 +15,16 @@ import com.example.deutschquiz.model.Adjective;
 import com.example.deutschquiz.model.Adverb;
 import com.example.deutschquiz.model.Verb;
 import com.example.deutschquiz.providers.CSVProvider;
+import com.example.deutschquiz.providers.WordProvider;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button_verbes, button_adjectifs, button_adverbes, button_mots, parameters_button;
+    Button button_verbes, button_adjectifs, button_adverbes, button_mots;
     ImageView image;
+
+
+    ImageView loading;
+    View load_overlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,38 +35,39 @@ public class MainActivity extends AppCompatActivity {
         button_adjectifs = findViewById(R.id.Adjectifs);
         button_adverbes = findViewById(R.id.Adverbes);
         button_mots = findViewById(R.id.Mots);
-        parameters_button = findViewById(R.id.Parameters);
         image = findViewById(R.id.declinaisons);
 
+        loading = findViewById(R.id.loading);
+        load_overlay = findViewById(R.id.loading_overlay);
         image.setImageResource(R.drawable.declinaisons);
 
 
         WikDictionary repo = new WikDictionary(this);
 
-        parameters_button.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ParametersActivity.class);
-            startActivity(intent);
-        });
+        button_verbes.setOnClickListener(v -> queryAndLaunchActivity(new CSVProvider(getAssets(), "verbes", Verb.class), repo));
+        button_adjectifs.setOnClickListener(v -> queryAndLaunchActivity(new CSVProvider(getAssets(), "adjectifs", Adjective.class), repo));
+        button_adverbes.setOnClickListener(v -> queryAndLaunchActivity(new CSVProvider(getAssets(), "adverbes", Adverb.class), repo));
+        button_mots.setOnClickListener(v -> queryAndLaunchActivity(new CSVProvider(getAssets(), "cours_gluck", null), repo));
 
-        button_verbes.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "verbes", Verb.class), repo);
-            startActivity(intent);
-        });
-        button_adjectifs.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "adjectifs", Adjective.class), repo);
-            startActivity(intent);
-        });
-        button_adverbes.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "adverbes", Adverb.class), repo);
-            startActivity(intent);
-        });
-        button_mots.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
-            WordRepository.setWordList(new CSVProvider(getAssets(), "cours_gluck", null), repo);
-            startActivity(intent);
-        });
+    }
+
+    private void queryAndLaunchActivity(WordProvider provider, WikDictionary repo) {
+
+        loading.setVisibility(View.VISIBLE);
+        load_overlay.setVisibility(View.VISIBLE);
+        findViewById(R.id.activity).setEnabled(false);
+
+        Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
+
+        new Thread(() -> {
+            WordRepository.setWordList(provider, repo);
+
+            runOnUiThread(() -> {
+                loading.setVisibility(View.INVISIBLE);
+                load_overlay.setVisibility(View.INVISIBLE);
+                findViewById(R.id.activity).setEnabled(true);
+                startActivity(intent);
+            });
+        }).start();
     }
 }

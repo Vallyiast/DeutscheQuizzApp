@@ -36,7 +36,7 @@ public class ParametersActivity extends AppCompatActivity {
         writeSeekBar.setProgress(CommonUses.nbButtonsWritingActivity);
 
         materialSwitch = findViewById(R.id.switch1);
-        materialSwitch.setActivated(CommonUses.includeTransparentWords);
+        materialSwitch.setChecked(CommonUses.includeTransparentWords);
 
         quizSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

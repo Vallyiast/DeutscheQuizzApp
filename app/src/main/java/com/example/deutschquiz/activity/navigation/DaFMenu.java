@@ -39,8 +39,6 @@ public class DaFMenu extends AppCompatActivity {
         button_a.setOnClickListener(v -> queryAndLaunchActivity(new DaFFileProvider(getAssets(), getIntent().getStringExtra("chapter") + "A"), repo));
         button_b.setOnClickListener(v -> queryAndLaunchActivity(new DaFFileProvider(getAssets(), getIntent().getStringExtra("chapter") + "B"), repo));
         button_c.setOnClickListener(v -> queryAndLaunchActivity(new DaFFileProvider(getAssets(), getIntent().getStringExtra("chapter") + "C"), repo));
-
-
     }
 
     private void queryAndLaunchActivity(WordProvider provider,WikDictionary repo) {

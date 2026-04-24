@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.deutschquiz.model.Word;
 import com.example.deutschquiz.WordRepository;
+import com.example.deutschquiz.utils.CommonUses;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,8 +40,11 @@ public class GuessView extends ViewModel {
     public void getNextWord() {
         currentIndex = dictionnaryIndexList.remove(0);
         Word germanWord = dictionnary.get(currentIndex);
-        translations.postValue(germanWord.getTranslation());
-        word.postValue(germanWord.getPrettyWordString());
+        if (!CommonUses.includeTransparentWords && germanWord.translationIsTransparent()) getNextWord();
+        else {
+            translations.postValue(germanWord.getTranslation());
+            word.postValue(germanWord.getPrettyWordString());
+        }
     }
 
     public LiveData<String> getWord() {

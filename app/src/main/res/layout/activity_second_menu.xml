@@ -11,9 +11,9 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="cog"
-        android:src="@drawable/cog"
-        android:elevation="10dp"
-
+        android:src="@drawable/small_cog"
+        android:elevation="1dp"
+        android:background="@android:color/transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

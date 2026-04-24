@@ -50,6 +50,7 @@ public class SecondMenuActivity  extends AppCompatActivity {
         });
         buttonGame.setOnClickListener(v -> {
             resetButtonColor();
+
             switchToFragment(guessFragment);
             v.setBackgroundColor(Color.parseColor("#3B3B3B"));
         });

@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class MatchView extends ViewModel {
@@ -21,7 +20,6 @@ public class MatchView extends ViewModel {
     private final MutableLiveData<List<String>> questionsData = new MutableLiveData<>();
     private final MutableLiveData<List<String>> answersData = new MutableLiveData<>();
     final Map<String,Word> wordMap = new HashMap<>();
-    final Random rand = new Random();
     private List<Word> dictionary;
     int nbResponses;
 
@@ -63,7 +61,13 @@ public class MatchView extends ViewModel {
     }
 
     private List<Word> getQuestions(int nbResponses) {
-        int rand_index = rand.nextInt(Math.max(0, dictionary.size()-nbResponses));
-        return dictionary.subList(rand_index,rand_index+nbResponses);
+        List<Word> wordListTemp = new ArrayList<>(dictionary);
+        Collections.shuffle(wordListTemp);
+        List<Word> result = new ArrayList<>();
+        while(result.size()<nbResponses && !wordListTemp.isEmpty()) {
+            Word word = wordListTemp.remove(0);
+            if (!word.translationIsTransparent() || CommonUses.includeTransparentWords) result.add(word);
+        }
+        return result;
     }
 }

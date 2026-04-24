@@ -3,14 +3,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#222222"
-    android:padding="16dp">
+    android:background="#222222">
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/main_menu"
         android:text="Menu"
         style="@style/ButtonMenu" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/word_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:visibility="gone"
+        />
 
     <ListView
         android:id="@+id/maListe"

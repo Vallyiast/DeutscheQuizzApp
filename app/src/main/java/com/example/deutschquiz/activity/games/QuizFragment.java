@@ -54,8 +54,6 @@ public class QuizFragment extends Fragment {
 
         addButtons();
 
-
-
         main.setOnClickListener(v -> requireActivity().finish());
         variation.setOnClickListener(v -> {
             viewModel.changeTranslationDirection();

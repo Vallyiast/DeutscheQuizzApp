@@ -19,10 +19,9 @@ import java.util.stream.IntStream;
 
 public class QuizView extends ViewModel {
 
-    private final MutableLiveData<String> question = new MutableLiveData<>();
+    private final MutableLiveData<String> questionLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<String>> answers = new MutableLiveData<>();
-    private String response;
-    private Word questionString;
+    private Word questionWord;
     final int nbResponses = CommonUses.nbButtonsQuizActivity;
     boolean answerToGerman = true;
     List<Word> germanWordsList = new ArrayList<>();
@@ -54,26 +53,24 @@ public class QuizView extends ViewModel {
     }
     public void nextWord() {
         firstTimeAnswering_FLAG = true;
-        Word germanWord = CommonUses.indexSuivant(scores, usedWordsList);
+        questionWord = CommonUses.indexSuivant(scores, usedWordsList);
 
-        List<Word> randomWordsList = getRandomWordsExcept(germanWord,nbResponses-1);
-        List<String> answerList = new ArrayList<>();
-
-        if (germanWord.getTranslation().isEmpty()) {
+        if (questionWord.getTranslation().isEmpty() || (!CommonUses.includeTransparentWords && questionWord.translationIsTransparent())) {
             nextWord();
         } else {
+            List<Word> responses = getRandomWordsExcept(questionWord, nbResponses - 1);
+            List<String> answerList = new ArrayList<>();
+
             if (answerToGerman) {
-                question.postValue(CommonUses.formatTranslations(germanWord.getTranslation()));
-                response = germanWord.getWordString();
+                questionLiveData.postValue(CommonUses.formatTranslations(questionWord.getTranslation()));
 
-                answerList.add(germanWord.getWordString());
-                answerList.addAll(randomWordsList.stream().map(Word::getWordString).collect(Collectors.toList()));
+                answerList.add(questionWord.getWordString());
+                answerList.addAll(responses.stream().map(Word::getWordString).collect(Collectors.toList()));
             } else {
-                question.postValue(germanWord.getWordString());
-                response = germanWord.getTranslation().get(0);
+                questionLiveData.postValue(questionWord.getPrettyWordString());
 
-                answerList.add(germanWord.getTranslation().get(0));
-                for (Word word : randomWordsList) {
+                answerList.add(questionWord.getTranslation().get(0));
+                for (Word word : responses) {
                     if (!word.getTranslation().isEmpty()) answerList.add(word.getTranslation().get(0));
                 }
             }
@@ -82,7 +79,7 @@ public class QuizView extends ViewModel {
         }
     }
     public LiveData<String> getQuestion() {
-        return question;
+        return questionLiveData;
     }
     public LiveData<List<String>> getAnswerList() {
         return answers;
@@ -97,36 +94,27 @@ public class QuizView extends ViewModel {
 
         while (randomWords.size() != nbOfWords && !dictionnaryIndexList.isEmpty()) {
             Word word = germanWordsList.get(dictionnaryIndexList.remove(0));
-            if (!word.equals(germanWord)) randomWords.add(word);
+            if (!word.equals(germanWord) && word.getClass() == germanWord.getClass()) randomWords.add(word);
         }
         return randomWords;
     }
 
     public boolean isACorrectResponse(String word) {
-        return response.equalsIgnoreCase(word);
+        return (answerToGerman ? questionWord.getWordString():questionWord.getTranslation().get(0)).equalsIgnoreCase(word);
     }
 
     public void modifyWordScore(String answer) {
         if (firstTimeAnswering_FLAG) {
             if (isACorrectResponse(answer)) {
-                if (answerToGerman) {
-                    scores.changeScore(response,-1);
-                } else {
-                    scores.changeScore(questionString.getWordString(),-1);
-                }
+                scores.changeScore(questionWord.getWordString(),-1);
             } else {
+                scores.changeScore(questionWord.getWordString(),1);
                 if (answerToGerman) {
-                    scores.changeScore(response,-1);
-                    scores.changeScore(answer,-1);
-                } else {
-                    scores.changeScore(questionString.getWordString(),-1);
-                    // TODO : Update the score when answers are not in german
+                    scores.changeScore(answer,1);
                 }
-
+                 // TODO : Update the score of the answer when answers are not in german
             }
             firstTimeAnswering_FLAG = false;
         }
     }
-
-
 }

@@ -22,6 +22,7 @@ import java.util.List;
 public class WordListFragment extends Fragment {
 
     private WordListView viewModel;
+    private final WordFragment wordFragment = new WordFragment();
     Button main;
 
     @Override
@@ -40,8 +41,12 @@ public class WordListFragment extends Fragment {
         main = view.findViewById(R.id.main_menu);
         main.setOnClickListener(v -> requireActivity().finish());
 
+        View container = view.findViewById(R.id.word_view);
         ListView listView = view.findViewById(R.id.maListe);
-        // Données à afficher
+
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.word_view, wordFragment, "WORD").hide(wordFragment)
+                .commit();
 
         List<Word> data = viewModel.getTranslations();
 
@@ -68,10 +73,18 @@ public class WordListFragment extends Fragment {
                     center.setText("Loading...");
                 }
 
+                convertView.setOnClickListener(v -> {
+                            container.setVisibility(View.VISIBLE);
+                            wordFragment.setWord(word);
+                            getChildFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                                    .show(wordFragment)
+                                    .commit();
+                        }
+                );
+
                 return convertView;
             }
         };
-
 
         listView.setAdapter(adapter);
     }

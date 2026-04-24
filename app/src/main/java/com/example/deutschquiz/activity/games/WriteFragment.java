@@ -38,9 +38,7 @@ public class WriteFragment extends Fragment {
     MaterialCardView lettersContainer, cadre;
 
     final List<Button> characterButtons = new ArrayList<>();
-
     String currentGermanWord;
-
 
 
     @Override

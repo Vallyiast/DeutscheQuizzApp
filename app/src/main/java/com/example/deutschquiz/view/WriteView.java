@@ -28,6 +28,7 @@ public class WriteView extends ViewModel {
 
     public void getNextWord() {
         Word germanWord = CommonUses.indexSuivant(scores, usedWordsList);
+
         word.postValue(germanWord.getWordString());
         translations.postValue(germanWord.getTranslation());
     }
