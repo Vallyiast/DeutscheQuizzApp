@@ -26,21 +26,6 @@ public class CommonUses {
         return text;
     }
 
-    /**
-     * Extrait de la base de données les indexes utiles du dictionnaire
-     * @param db databases
-     * @return dictionnaire d'index utile
-     */
-    public static List<Word> extractionDictionnaire(ScoreDataBase db, List<Word> dictionnaire) {
-        List<Word> dictionnaire_utile = new ArrayList<>();
-        for (Word word: dictionnaire) {
-            if (db.getScore(word.getWordString())>-10) {
-                dictionnaire_utile.add(word);
-            }
-        }
-        return dictionnaire_utile;
-    }
-
 
     /**
      * Renvoie l'index du mot suivant tiré au hasard dans le dictionnaire de mot pondéré par les scores de la base de données

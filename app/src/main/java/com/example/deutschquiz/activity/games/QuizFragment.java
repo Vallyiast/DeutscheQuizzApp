@@ -17,14 +17,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.deutschquiz.R;
 import com.example.deutschquiz.utils.UsedColors;
+import com.example.deutschquiz.view.GenderQuizView;
+import com.example.deutschquiz.view.IQuiz;
 import com.example.deutschquiz.view.QuizView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class QuizFragment extends Fragment {
-    private QuizView viewModel;
+    private IQuiz viewModel;
     LinearLayout buttonContainer;
     TextView questionTextview;
     Button next, variation, main;
@@ -34,7 +37,10 @@ public class QuizFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         viewModel = new ViewModelProvider(this).get(QuizView.class);
+        if (getArguments() != null && Objects.equals(getArguments().get("activity_quiz"), "gender"))
+            viewModel = new ViewModelProvider(this).get(GenderQuizView.class);
         viewModel.init(requireContext());
     }
 
@@ -63,10 +69,7 @@ public class QuizFragment extends Fragment {
         viewModel.getAnswerList().observe(getViewLifecycleOwner(), answerList -> {
             for (int i = 0; i< answerList.size(); i++) {
                 MaterialButton answer_button = answersButtons.get(i);
-                answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
                 answer_button.setText(answerList.get(i));
-                answer_button.setTextColor(Color.parseColor("#FFFFFF"));
-                answer_button.setOnClickListener(v -> onAnswerClick(answer_button));
             }
         });
 
@@ -92,6 +95,7 @@ public class QuizFragment extends Fragment {
             MaterialButton button = new MaterialButton(themedContext);
             this.buttonContainer.addView(button);
             this.answersButtons.add(button);
+            button.setOnClickListener(v -> onAnswerClick(button));
         }
     }
 
@@ -100,6 +104,7 @@ public class QuizFragment extends Fragment {
      */
     private void updateQuestion() {
         viewModel.nextWord();
+        resetButtonLayout();
         next.setVisibility(View.INVISIBLE);
     }
 
@@ -111,5 +116,12 @@ public class QuizFragment extends Fragment {
             answerButton.setBackgroundColor(UsedColors.dark_color_Loose);
         }
         viewModel.modifyWordScore(answerButton.getText().toString());
+    }
+
+    private void resetButtonLayout() {
+        for (MaterialButton answer_button : answersButtons) {
+            answer_button.setBackgroundColor(Color.rgb(27, 27, 27));
+            answer_button.setTextColor(Color.parseColor("#FFFFFF"));
+        }
     }
 }

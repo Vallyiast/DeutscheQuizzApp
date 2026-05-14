@@ -2,6 +2,7 @@ package com.example.deutschquiz.activity.games;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.deutschquiz.utils.CommonUses;
 import com.example.deutschquiz.R;
 import com.example.deutschquiz.view.GuessView;
 import com.google.android.material.card.MaterialCardView;
+
+import java.util.Locale;
 
 public class GuessFragment extends Fragment {
 
@@ -76,22 +79,22 @@ public class GuessFragment extends Fragment {
     }
 
     private void updateQuestion() {
-        nbRemainingWords.setText(String.valueOf(viewModel.nbOfRemainingWords()));
+        nbRemainingWords.setText(String.format(Locale.getDefault(),"%d",viewModel.nbOfRemainingWords()));
 
         if (viewModel.dictionnaryIsEmpty()) {
             frame.setVisibility(View.INVISIBLE);
         } else {
             isGerman = false;
             viewModel.getNextWord();
+            frame.setCardBackgroundColor(viewModel.getWordAssociatedColor());
         }
     }
 
     private void flipCard() {
         isGerman = !isGerman;
-
         frame.animate()
                 .rotationYBy(360f)
-                .setDuration(150)
+                .setDuration(450)
                 .withEndAction(() -> {
                     if (isGerman) word.setText(currentGermanWord);
                     else word.setText(CommonUses.formatTranslations(viewModel.getTranslations().getValue()));

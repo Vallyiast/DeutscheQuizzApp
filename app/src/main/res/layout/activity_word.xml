@@ -24,6 +24,7 @@
             android:textSize="30sp"
             android:textColor="#ffffff"
             android:paddingStart="10sp"
+            android:paddingEnd="1sp"
             android:textStyle="bold"
             android:text="Word"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,6 +38,7 @@
             android:textSize="20sp"
             android:textColor="#444"
             android:paddingStart="10sp"
+            android:paddingEnd="1sp"
             android:textStyle="italic"
             android:text="transparent"
             app:layout_constraintTop_toTopOf="parent"
@@ -53,6 +55,16 @@
             app:layout_constraintTop_toBottomOf="@+id/word"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content"
+            android:text="Score"
+            app:layout_constraintTop_toBottomOf="@+id/translations"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

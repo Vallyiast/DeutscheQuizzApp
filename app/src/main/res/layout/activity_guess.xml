@@ -23,11 +23,11 @@
             android:id="@+id/scoreText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
-            android:gravity="bottom"
-            android:text="5"
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="555"
             android:textColor="#ffffff"
-            android:textSize="38sp"
+            android:textSize="28sp"
             android:textStyle="bold"/>
 
     </com.google.android.material.card.MaterialCardView>

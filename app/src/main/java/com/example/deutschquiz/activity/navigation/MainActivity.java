@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.deutschquiz.R;
 import com.example.deutschquiz.WordRepository;
+import com.example.deutschquiz.database.ScoreDataBase;
 import com.example.deutschquiz.database.WikDictionary;
 import com.example.deutschquiz.model.Adjective;
 import com.example.deutschquiz.model.Adverb;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
 
         new Thread(() -> {
-            WordRepository.setWordList(provider, repo);
+            WordRepository.setWordList(provider, repo, new ScoreDataBase(this));
 
             runOnUiThread(() -> {
                 loading.setVisibility(View.INVISIBLE);

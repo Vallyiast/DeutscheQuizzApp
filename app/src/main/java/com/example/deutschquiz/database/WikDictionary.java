@@ -17,15 +17,14 @@ import java.util.List;
 
 
 public class WikDictionary extends SQLiteOpenHelper {
-
-    private static final String dictionaryName = "de-"+ CommonUses.translationLanguage;
-    private static final String DB_NAME = dictionaryName+".db";
-
+    private final String dictionaryName;
     private final Context context;
     private final SQLiteDatabase dbase;
 
     public WikDictionary(Context context) {
-        super(context, DB_NAME, null, 1);
+        super(context, "de-"+ CommonUses.translationLanguage+".db", null, 1);
+        dictionaryName = "de-"+ CommonUses.translationLanguage;
+        Log.d(this.getClass().getName(),dictionaryName);
         this.context = context;
         dbase = this.getReadableDatabase();
     }

@@ -47,4 +47,5 @@ public abstract class Word {
     public int hashCode() {
         return Objects.hashCode(word);
     }
+
 }

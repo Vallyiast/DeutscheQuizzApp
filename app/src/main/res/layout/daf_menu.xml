@@ -22,6 +22,19 @@
         android:text="A" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/A_gender"
+        android:layout_width="match_parent"
+        android:layout_margin="10sp"
+        style="@style/PrimaryButton"
+        android:textSize="30sp"
+
+        app:layout_constraintTop_toBottomOf="@id/A"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Gender"  />
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/B"
         android:layout_width="match_parent"
         style="@style/PrimaryButton"
@@ -32,19 +45,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="B" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/B_gender"
+        android:layout_width="match_parent"
+        android:layout_margin="10sp"
+        style="@style/PrimaryButton"
+        android:textSize="30sp"
 
+        app:layout_constraintTop_toBottomOf="@id/B"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Gender"  />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/C"
         android:layout_width="match_parent"
         android:textSize="50sp"
         style="@style/PrimaryButton"
         app:layout_constraintTop_toBottomOf="@id/B"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="C" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/C_gender"
+        android:layout_width="match_parent"
+        android:layout_margin="10sp"
+        style="@style/PrimaryButton"
+        android:textSize="30sp"
 
+        app:layout_constraintTop_toBottomOf="@id/C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Gender" />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
         android:layout_width="match_parent"

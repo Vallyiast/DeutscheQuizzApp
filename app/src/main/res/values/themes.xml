@@ -3,7 +3,12 @@
     <style name="Base.Theme.DeutschQuiz" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        android:background="#222222"
     </style>
 
-    <style name="Theme.DeutschQuiz" parent="Base.Theme.DeutschQuiz" />
+    <style name="Theme.DeutschQuiz" parent="Base.Theme.DeutschQuiz" >
+
+        android:background="#222222"
+    </style>
+
 </resources>

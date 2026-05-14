@@ -36,7 +36,6 @@ public class WriteFragment extends Fragment {
     TextView textviewQuestion, textviewReponse;
     Button next, main, evaluate;
     MaterialCardView lettersContainer, cadre;
-
     final List<Button> characterButtons = new ArrayList<>();
     String currentGermanWord;
 
@@ -73,14 +72,12 @@ public class WriteFragment extends Fragment {
 
         main.setOnClickListener(v -> requireActivity().finish());
 
-
         viewModel.getTranslations().observe(getViewLifecycleOwner(), translations -> textviewQuestion.setText(CommonUses.formatTranslations(translations)));
 
         viewModel.getWord().observe(getViewLifecycleOwner(), germanWord -> {
             currentGermanWord = germanWord.toLowerCase();
             updateCharacters();
         });
-
 
         next.setOnClickListener(v -> {
             textviewReponse.setText("");
@@ -89,9 +86,8 @@ public class WriteFragment extends Fragment {
 
         evaluate.setOnClickListener(v -> {
             next.setVisibility(View.VISIBLE);
-            checkAnswer(currentGermanWord.equalsIgnoreCase(textviewReponse.getText().toString()));
+            checkAnswer(viewModel.evaluate(textviewReponse.getText().toString()));
         });
-
         updateQuestion();
     }
 
@@ -176,15 +172,16 @@ public class WriteFragment extends Fragment {
             cadre.setCardBackgroundColor(UsedColors.dark_color_Win);
             cadre.setStrokeColor(UsedColors.light_color_Win);
 
-            evaluate.animate() 
-                    .alpha(0.0f).setDuration(500)
-                    .withEndAction(() -> evaluate.setVisibility(View.INVISIBLE))
-                    .start();
-            lettersContainer.setVisibility(View.INVISIBLE);
         } else {
             textviewReponse.setTextColor(UsedColors.light_color_Loose);
             cadre.setCardBackgroundColor(UsedColors.dark_color_Loose);
             cadre.setStrokeColor(UsedColors.light_color_Loose);
         }
+        textviewReponse.setText(currentGermanWord);
+        evaluate.animate()
+                .alpha(0.0f).setDuration(500)
+                .withEndAction(() -> evaluate.setVisibility(View.INVISIBLE))
+                .start();
+        lettersContainer.setVisibility(View.INVISIBLE);
     }
 }

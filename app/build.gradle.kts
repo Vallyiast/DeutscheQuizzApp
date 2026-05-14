@@ -12,6 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.deutschquiz"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -62,7 +63,6 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.core.ktx)
-    implementation(libs.google.material)
 
 
 

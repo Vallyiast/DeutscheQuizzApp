@@ -14,11 +14,11 @@ import com.example.deutschquiz.utils.CommonUses;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class QuizView extends ViewModel {
-
+public class QuizView extends ViewModel implements IQuiz {
     private final MutableLiveData<String> questionLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<String>> answers = new MutableLiveData<>();
     private Word questionWord;
@@ -26,24 +26,20 @@ public class QuizView extends ViewModel {
     boolean answerToGerman = true;
     List<Word> germanWordsList = new ArrayList<>();
     List<Word> usedWordsList = new ArrayList<>();
-    public ScoreDataBase scores;
     boolean firstTimeAnswering_FLAG;
 
+    Random random = new Random();
 
     public void init(Context context) {
-        scores = new ScoreDataBase(context);
         germanWordsList = WordRepository.getWordList();
-        usedWordsList = CommonUses.extractionDictionnaire(scores,germanWordsList); //List des index utiles du dictionnary
+        usedWordsList = WordRepository.getWordListWithScore(-5); //List des index utiles du dictionnary
     }
-
     public int getNbResponses() {
         return nbResponses;
     }
-
     public void changeTranslationDirection() {
         answerToGerman = !answerToGerman;
     }
-
     public String currentTranslationDirection() {
         if (answerToGerman) {
             return "to DE";
@@ -53,7 +49,8 @@ public class QuizView extends ViewModel {
     }
     public void nextWord() {
         firstTimeAnswering_FLAG = true;
-        questionWord = CommonUses.indexSuivant(scores, usedWordsList);
+
+        questionWord = usedWordsList.get(random.nextInt(usedWordsList.size()));
 
         if (questionWord.getTranslation().isEmpty() || (!CommonUses.includeTransparentWords && questionWord.translationIsTransparent())) {
             nextWord();
@@ -84,8 +81,6 @@ public class QuizView extends ViewModel {
     public LiveData<List<String>> getAnswerList() {
         return answers;
     }
-
-
     private List<Word> getRandomWordsExcept(Word germanWord, int nbOfWords) {
         List<Word> randomWords = new ArrayList<>();
 
@@ -98,21 +93,16 @@ public class QuizView extends ViewModel {
         }
         return randomWords;
     }
-
     public boolean isACorrectResponse(String word) {
         return (answerToGerman ? questionWord.getWordString():questionWord.getTranslation().get(0)).equalsIgnoreCase(word);
     }
-
     public void modifyWordScore(String answer) {
         if (firstTimeAnswering_FLAG) {
             if (isACorrectResponse(answer)) {
-                scores.changeScore(questionWord.getWordString(),-1);
+                WordRepository.changeWordScore(questionWord,-1);
             } else {
-                scores.changeScore(questionWord.getWordString(),1);
-                if (answerToGerman) {
-                    scores.changeScore(answer,1);
-                }
-                 // TODO : Update the score of the answer when answers are not in german
+                WordRepository.changeWordScore(questionWord,1);
+                 // TODO : Update the score of the answer
             }
             firstTimeAnswering_FLAG = false;
         }

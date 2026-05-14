@@ -18,14 +18,14 @@ public class GuessView extends ViewModel {
 
     private final MutableLiveData<String> word = new MutableLiveData<>();
     private final MutableLiveData<List<String>> translations = new MutableLiveData<>();
-
+    Word germanWord;
     List<Word> dictionnary = new ArrayList<>();
     List<Integer> dictionnaryIndexList = new ArrayList<>();
 
     int currentIndex;
 
     public void init() {
-        dictionnary = WordRepository.getWordList();
+        dictionnary = WordRepository.getWordListWithScore(-10);
         dictionnaryIndexList = IntStream.range(1, dictionnary.size()).boxed().collect(Collectors.toList());
         Collections.shuffle(dictionnaryIndexList);
     }
@@ -38,8 +38,9 @@ public class GuessView extends ViewModel {
     }
 
     public void getNextWord() {
+        if (germanWord!=null) WordRepository.changeWordScore(germanWord,-1);
         currentIndex = dictionnaryIndexList.remove(0);
-        Word germanWord = dictionnary.get(currentIndex);
+        germanWord = dictionnary.get(currentIndex);
         if (!CommonUses.includeTransparentWords && germanWord.translationIsTransparent()) getNextWord();
         else {
             translations.postValue(germanWord.getTranslation());
@@ -54,6 +55,11 @@ public class GuessView extends ViewModel {
         return translations;
     }
     public void forgotWord() {
+        WordRepository.changeWordScore(germanWord,1);
         dictionnaryIndexList.add(currentIndex);
+    }
+
+    public int getWordAssociatedColor() {
+        return germanWord.hashCode();
     }
 }

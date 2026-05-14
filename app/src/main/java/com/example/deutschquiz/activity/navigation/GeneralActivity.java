@@ -10,7 +10,7 @@ import com.example.deutschquiz.R;
 
 public class GeneralActivity extends AppCompatActivity {
 
-    LinearLayout commons, chapter12, chapter13, chapter14,chapter15,chapter16;
+    LinearLayout commons, chapter12, chapter13, chapter14,chapter15,chapter16,chapter17;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class GeneralActivity extends AppCompatActivity {
         chapter14 = findViewById(R.id.chapter14);
         chapter15 = findViewById(R.id.chapter15);
         chapter16 = findViewById(R.id.chapter16);
+        chapter17 = findViewById(R.id.chapter17);
 
         commons.setOnClickListener(v -> {
             Intent intent = new Intent(GeneralActivity.this, MainActivity.class);
@@ -52,6 +53,11 @@ public class GeneralActivity extends AppCompatActivity {
         chapter16.setOnClickListener(v -> {
             Intent intent = new Intent(GeneralActivity.this, DaFMenu.class);
             intent.putExtra("chapter", "16");
+            startActivity(intent);
+        });
+        chapter17.setOnClickListener(v -> {
+            Intent intent = new Intent(GeneralActivity.this, DaFMenu.class);
+            intent.putExtra("chapter", "17");
             startActivity(intent);
         });
     }

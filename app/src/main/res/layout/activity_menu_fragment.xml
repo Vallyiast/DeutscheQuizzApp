@@ -18,10 +18,7 @@
         android:name="com.example.deutschquiz.activity.games.GuessFragment"
         tools:layout="@layout/activity_guess" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +51,6 @@
                 style="@style/PrimaryButton"/>
 
         </LinearLayout>
-    </LinearLayout>
 
 
 </LinearLayout>

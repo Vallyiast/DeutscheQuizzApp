@@ -27,7 +27,7 @@ public class MatchView extends ViewModel {
     public void init() {
         nbResponses = CommonUses.nbButtonsMatchActivity;
 
-        dictionary = WordRepository.getWordList();
+        dictionary = WordRepository.getWordListWithScore(-10);
         nbResponses = Math.min(nbResponses, dictionary.size());
     }
 

@@ -52,7 +52,7 @@
                 android:padding="8dp"
                 android:textColor="#eeeeee" />
 
-            <TextView
+            <EditText
                 android:id="@+id/reponse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,9 @@
                 android:textColor="#ffffff"
                 android:textSize="30sp"
                 android:padding="12dp"
+                android:inputType="text"
                 android:layout_marginTop="22dp"/>
+
 
         </LinearLayout>
 
